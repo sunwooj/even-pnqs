@@ -90,7 +90,7 @@ function stepExperiment () {
             var gen_com = $('#lang_com').val();
             gen_com = gen_com.replace (/,/g, "");
 
-			if (nat.length > 0) {
+			if ($('.nat:checked').length > 0 && $('.age:checked').length > 0 && $('.gen:checked').length > 0 && $('.eth:checked').length > 0) {
 
             data.nat = nat;
             data.age = age;
