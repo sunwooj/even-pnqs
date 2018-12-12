@@ -1,6 +1,6 @@
 //(if collecting data with php/server instead of MTurk)
-var experimentName = "snpi-pnq-exp2-demo";
-var submitAddress = "https://web.stanford.edu/~sunwooj/cgi-bin/process.php";
+// var experimentName = "snpi-pnq-exp2-demo";
+// var submitAddress = "https://web.stanford.edu/~sunwooj/cgi-bin/process.php";
 
 
 // List of stimuli
@@ -17,20 +17,9 @@ var stimuliList = shuffle([
 ["Alice", ["mnpi-lift-evenq-c1", "mnpi-lift-evenpnq-c1", "mnpi-lift-pq-c1", "mnpi-lift-pnq-c1"], "mnpi-lift-c2", "Jane might have helped", "Jane DIDN'T help much", "Jane helped, at least a little", "Mark"]],
 
 [["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq-c1", "snpi-anything-pnq-c1", "snpi-anything-evenq-c1"], "snpi-anything-c2", "Nora might have brought something", "Nora DIDN'T bring much", "Nora brought something, at least a small thing", "Max"],
-["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], "snpi-anytime-c2", "Sally might have some time to spare", "Sally DOESN'T have time", "Sally has time, at least a little bit", "Alice"]]//,
-
-// [["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"], ["Of course she did.", "Of course she didn't."]],
-// ["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"], ["Of course she did.", "Of course she didn't."]]],
-
-// [["Lydia", ["filler-anynot-filler1-c1", "filler-anynot-filler1-c1", "filler-anynot-filler1-c1", "filler-anynot-filler1-c1"], ["anynot-neg", "anynot-pos"], ["No one was there, right?", "Tell me who you saw."]],
-// ["Lydia", ["filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1"], ["everclimb-neg", "everclimb-pos"], ["Probably nobody, right?", "I know James Burton did. But who else?"]]]
+["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], "snpi-anytime-c2", "Sally might have some time to spare", "Sally DOESN'T have time", "Sally has time, at least a little bit", "Alice"]]
 
 ]);
-
-// Fillers that set baselines in the first two trials
-// var basefillerList = shuffle([
-// ["Prue", "filler-true-base1-c1", "true-neg"], ["Dean", "filler-false-base2-c1", "false-pos"]
-// ]);
 
 
 
@@ -47,15 +36,7 @@ $(document).ready(function() {
 
     
     $('#startbutton').click(function() {
-        // var nat = document.getElementById("native").checked;
-        // var spe = document.getElementById("speaker").checked;
-        // if (nat == true) {
         stepExperiment();
-        // }
-        // else {
-        //     checkboxwarning = "Please check both boxes to confirm that you meet the necessary requirements, in order to proceed to the experiment.";
-        //     $("#checkboxWarning").html(checkboxwarning);
-        // }
     });
 });
 
@@ -69,14 +50,6 @@ function showSlide (slideName) {
 var stimRandom = Math.floor(Math.random() * 2);
 var qtypeRandom = Math.floor(Math.random() * 4);
 
-// // var stimuliChoice = shuffle(stimuliSet);
-// var stimuliVector = stimuliSet[stimRandom];
-// // var nameStim = stimuliVector[0];
-
-// var qtypeVector = stimuliVector[1];
-// // var qtypeStim = qtypeVector[qtypeRandom];
-// var followupVector = stimuliVector[2];
-// // var followupStim = followupVector[stimRandom];
 
 function stepExperiment () {
     if (trialnum == 4) { // end the experiment. 
@@ -168,23 +141,11 @@ function stepExperiment () {
         $(".currentSent3").html(sent3Stim);
 
 
-        
-        // Tell HTML which image file will display
-        // document.getElementById('currentPic').src = "stimuli/" + qtypeStim + ".png";
-
-        // document.getElementById('currentFollowup').src = "stimuli/" + followupStim + ".png";
-
-        // var TrueFalse = $("#TrueFalse");
-        // TrueFalse.html(
-        //     TrueFalse.find("label").sort(function(){
-        //         return Math.round(Math.random())-0.5;}));
-
-
         document.body.scrollTop = document.documentElement.scrollTop = 0;
 
         showSlide('stage'); 
-        one = "1";
-        $(".part_number").html(one);
+
+        $(".part_number").html("1");
         $('#commit').show();
 
         $('#prompt1').show();
@@ -194,8 +155,6 @@ function stepExperiment () {
         $('#nextpart').show();
 
         $('#responseForm2').hide();
-        // $('#optional1').hide();
-        // $('#commentBox1').hide();
         $('#continue').hide();
 
         document.getElementById('currentHidden').src = "../stimuli/hidden-1.png";
@@ -211,7 +170,6 @@ function stepExperiment () {
             if  (slider1.style.backgroundColor != "" && slider2.style.backgroundColor != "") {
                 document.getElementById('currentPic1').src = "../stimuli/" + pic2Stim + ".png";
                 $('#responseForm1').hide();
-                // two = "2";
                 $(".part_number").html("2");
                 $('#prompt1').hide();
                 $('#prompt2').show();
@@ -220,8 +178,6 @@ function stepExperiment () {
                 $('#nextpart').hide();
 
                 $('#responseForm2').show();
-                // $('#optional1').show();
-                // $('#commentBox1').show();
                 $('#continue').show();
 
                 $('#commit').hide();
@@ -238,7 +194,6 @@ function stepExperiment () {
         $('#continue').click(function() {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-            // var choiceResponse = $('#responseForm1').serialize();
             var sliderResponse1 = $('#sliderval1').val();
             var sliderResponse2 = $('#sliderval2').val();
             var sliderResponse3 = $('#sliderval3').val();
@@ -254,29 +209,11 @@ function stepExperiment () {
 
                 // make continue button available for re-use
                 $("#continue").unbind('click');
-                // ensure that response options are unticked for the next problems  
-                // $(".response").prop('checked', false);
-                // ensure that the comment box is emptied as well
+                // ensure that the comment box is emptied 
                 $(".commentBox").val("");
                 // erase warnings 
                 $("#warning2").html("");
 
-              
-                // Write data from collected responses
-                // if (trialnum < 3) {
-                //     data.fillerType = contextPic;
-                //     data.baseChoice = choiceResponse;
-                //     data.baseRating = sliderResponse1;
-                //     data.baseComment = commentResponse1;
-                // }
-
-                // else if (trialnum = 2) {
-                //     data.baseFalseC = choiceResponse;
-                //     data.baseFalseR = sliderResponse1;
-                //     data.baseFalseComment = commentResponse1;
-                // }
-
-                // else {
                     trial = {};
                     trial.name1 = name1Stim;
                     trial.qtype = qtypeStim;
@@ -288,12 +225,9 @@ function stepExperiment () {
                     trial.indignation = sliderResponse5;
                     trial.comment = commentResponse1;
                     data["trial" + trialnum] = trial;
-                // }
 
-                // Initialize the sliders again
                 refreshSlider();
             
-
                 // Move on to the next trial
                 stepExperiment();
      

@@ -5,10 +5,11 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-<!-- CHANGE LATER WHEN DOING MTURK -->
-<!-- <script type="text/javascript" src="https://sunwooj.github.io/experiments-shared/mmturkey.0.5.js"></script>  -->
+<!-- FOR MTURK -->
+<script type="text/javascript" src="https://sunwooj.github.io/experiments-shared/mmturkey.0.5.js"></script> 
 
-<script type="text/javascript" src="https://stanford.edu/~sunwooj/experiments/mmturkey-extension.js"></script> 
+<!-- FOR PHP DATA GATHERING -->
+<!-- <script type="text/javascript" src="https://stanford.edu/~sunwooj/experiments/mmturkey-extension.js"></script>  -->
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
@@ -38,12 +39,12 @@
 <img src="../experiments-shared/princeton-logo.png" alt="Princeton Program in Linguistics" width="240">
 <br>
 <p class='block-text2'>
-NOTE: PLEASE DO NOT OPEN THE SURVEY IN A NEW TAB. THIS WILL PREVENT THE MTURK FROM SUBMITTING THE RESULTS. THERE IS NO VERIFICATION CODE AT THE END. MTURK WILL SUBMIT THE RESULTS AUTOMATICALLY.
+NOTE: PLEASE DO NOT OPEN THE SURVEY IN A NEW TAB. THIS WILL PREVENT MTURK FROM SUBMITTING THE RESULTS. THERE IS NO VERIFICATION CODE AT THE END. MTURK WILL SUBMIT THE RESULTS AUTOMATICALLY.
 </p>
 
 <p class='scrollbox'>
 LEGAL INFORMATION: <br>
-(Please scroll down the box below and read the consent form before proceeding.)
+(Please scroll through the box and read the consent form before proceeding.)
 <br><br>
 We invite you to participate in a short research study on language production and comprehension. In this study, you will be asked to make a few judgements about English sentences in conversations. The study will take approximately 3 to 5 minutes to complete. 
 <br><br>
@@ -67,7 +68,7 @@ If you have any questions, please contact the principal investigator at sunwooj@
     <div>
 
 <br><br>
-<p class='block-text'>In this experiment, you will make judgements on 10 English sentences, and follow-ups to that sentences. </p>
+<p class='block-text'>In this experiment, you will make judgements on 10 English sentences, and on follow-ups to those sentences. </p>
 
 <p class='block-text'>Whenever a word is CAPITALIZED, it means that the speaker emphasized it in her/his pronunciation.</p>
 
@@ -75,7 +76,7 @@ If you have any questions, please contact the principal investigator at sunwooj@
 
 <p class='block-text'> <strong><span style="font-weight: bold; color: #8C1515;">We will check to make sure that everything was read. Thanks for your participation!</span></strong> </p>
 
-<br><br>
+<br>
 <button type='button' id='startbutton'>Start experiment</button>
 
     </div>
@@ -190,9 +191,9 @@ You are done with the main experiment. As a final step, we ask that you fill out
 <form id='eval'>
 <p class='questionSent'> 1. Did you enjoy the HIT?
 <br>
-<input type='checkbox' class='ev' name='ev' id='evalpos' value='yes' /> Yes <br>
-<input type='checkbox' class='ev' name='ev' id='evalneg' value='maybe' /> Not really <br>
-<input type='checkbox' class='ev' name='ev' id='evalneg2' value='no' /> No 
+<input type='radio' class='ev' name='ev' id='evalpos' value='yes' /> Yes <br>
+<input type='radio' class='ev' name='ev' id='evalneg' value='maybe' /> Not really <br>
+<input type='radio' class='ev' name='ev' id='evalneg2' value='no' /> No 
 </p>
 </form>
 
@@ -200,8 +201,8 @@ You are done with the main experiment. As a final step, we ask that you fill out
 <form id='englishNative'>
 <p class='questionSent'> 2. Are you a native speaker of American English? 
 <br>
-<input type='checkbox' class='nat' name='natC' id='AmE' value='Y' /> Yes <br>
-<input type='checkbox' class='nat' name='natC' id='nonAmE' value='N' /> No 
+<input type='radio' class='nat' name='natC' id='AmE' value='Y' /> Yes <br>
+<input type='radio' class='nat' name='natC' id='nonAmE' value='N' /> No 
 <br>
 Please list any other languages that you speak fluently.
 <br>
@@ -213,11 +214,11 @@ Please list any other languages that you speak fluently.
 <form id='ageForm'>
 <p class='questionSent'> 3. What is your age?
 <br>
-<input type='checkbox' class='age' name='ageC' id='20s' value='20s' /> 18-29 <br>
-<input type='checkbox' class='age' name='ageC' id='30s' value='30s' /> 30-39 <br>
-<input type='checkbox' class='age' name='ageC' id='40s' value='40s' /> 40-49 <br>
-<input type='checkbox' class='age' name='ageC' id='50s' value='50s' /> 50-59 <br>
-<input type='checkbox' class='age' name='ageC' id='60s' value='60s' /> 60+ <br>
+<input type='radio' class='age' name='ageC' id='20s' value='20s' /> 18-29 <br>
+<input type='radio' class='age' name='ageC' id='30s' value='30s' /> 30-39 <br>
+<input type='radio' class='age' name='ageC' id='40s' value='40s' /> 40-49 <br>
+<input type='radio' class='age' name='ageC' id='50s' value='50s' /> 50-59 <br>
+<input type='radio' class='age' name='ageC' id='60s' value='60s' /> 60+ <br>
 </p>
 </form>
 
@@ -225,10 +226,10 @@ Please list any other languages that you speak fluently.
 <form id='genderForm'>
 <p class='questionSent'> 4. How would you describe your gender? 
 <br>
-<input type='checkbox' class='gen' name='genC' id='mgen' value='M' /> Male <br>
-<input type='checkbox' class='gen' name='genC' id='fgen' value='F' /> Female <br>
-<input type='checkbox' class='gen' name='genC' id='nbgen' value='NB' /> Non-binary <br>
-<input type='checkbox' class='gen' name='genC' id='ogen' value='O' /> Other:  <input type='text' name='gen' id='ogen_com' />
+<input type='radio' class='gen' name='genC' id='mgen' value='M' /> Male <br>
+<input type='radio' class='gen' name='genC' id='fgen' value='F' /> Female <br>
+<input type='radio' class='gen' name='genC' id='nbgen' value='NB' /> Non-binary <br>
+<input type='radio' class='gen' name='genC' id='ogen' value='O' /> Other:  <input type='text' name='gen' id='ogen_com' />
 </p>
 </form>
 
@@ -236,12 +237,12 @@ Please list any other languages that you speak fluently.
 <form id='ethnicityForm'>
 <p class='questionSent'> 5. How would you describe your racial/ethnic identity?
 <br>
-<input type='checkbox' class='eth' name='ethC' id='afa' value='AFR' /> African American <br>
-<input type='checkbox' class='eth' name='ethC' id='asa' value='ASI' /> Asian American <br>
-<input type='checkbox' class='eth' name='ethC' id='ca' value='CAU' /> Caucasian <br>
-<input type='checkbox' class='eth' name='ethC' id='la' value='LAT' /> Latina/o/x <br>
-<input type='checkbox' class='eth' name='ethC' id='nta' value='NAT' /> Native American <br>
-<input type='checkbox' class='eth' name='ethC' id='oa' value='OTH' /> Other:  <input type='text' name='eth' id='oeth_com' /><br>
+<input type='radio' class='eth' name='ethC' id='afa' value='AFR' /> African American <br>
+<input type='radio' class='eth' name='ethC' id='asa' value='ASI' /> Asian American <br>
+<input type='radio' class='eth' name='ethC' id='ca' value='CAU' /> Caucasian <br>
+<input type='radio' class='eth' name='ethC' id='la' value='LAT' /> Latina/o/x <br>
+<input type='radio' class='eth' name='ethC' id='nta' value='NAT' /> Native American <br>
+<input type='radio' class='eth' name='ethC' id='oa' value='OTH' /> Other:  <input type='text' name='eth' id='oeth_com' /><br>
 </p>
 </form>
 
@@ -249,16 +250,16 @@ Please list any other languages that you speak fluently.
 <form id='regionForm'>
 <p class='questionSent'>6. Where would you say you grew up? (In other words: what is your hometown?) 
 <br>
-<input type='checkbox' class='reg' name='regC' id='nonus' value='nonUS' /> Outside the US <br>
-<input type='checkbox' class='reg' name='regC' id='o48s' value='non48' /> Outside the contiguous 48 states <br>
-<input type='checkbox' class='reg' name='regC' id='neweng' value='NE' /> New England <br>
-<input type='checkbox' class='reg' name='regC' id='midatl' value='MA' /> The Mid-Atlantic / Northeast Corridor (greater DC, Philadelphia, NY) <br>
-<input type='checkbox' class='reg' name='regC' id='midw' value='MW' /> The Midwest / The Great Lakes <br>
-<input type='checkbox' class='reg' name='regC' id='appal' value='SO' /> Appalachia / The South <br>
-<input type='checkbox' class='reg' name='regC' id='sw' value='SW' /> The Southwest <br>
-<input type='checkbox' class='reg' name='regC' id='rock' value='RO' /> The Rockies <br>
-<input type='checkbox' class='reg' name='regC' id='wc' value='WE' /> The West Coast <br>
-<input type='checkbox' class='reg' name='regC' id='rego' value='OT' /> Other:  <input type='text' name='eth' id='reg_com' /><br>
+<input type='radio' class='reg' name='regC' id='nonus' value='nonUS' /> Outside the US <br>
+<input type='radio' class='reg' name='regC' id='o48s' value='non48' /> Outside the contiguous 48 states <br>
+<input type='radio' class='reg' name='regC' id='neweng' value='NE' /> New England <br>
+<input type='radio' class='reg' name='regC' id='midatl' value='MA' /> The Mid-Atlantic / Northeast Corridor (greater DC, Philadelphia, NY) <br>
+<input type='radio' class='reg' name='regC' id='midw' value='MW' /> The Midwest / The Great Lakes <br>
+<input type='radio' class='reg' name='regC' id='appal' value='SO' /> Appalachia / The South <br>
+<input type='radio' class='reg' name='regC' id='sw' value='SW' /> The Southwest <br>
+<input type='radio' class='reg' name='regC' id='rock' value='RO' /> The Rockies <br>
+<input type='radio' class='reg' name='regC' id='wc' value='WE' /> The West Coast <br>
+<input type='radio' class='reg' name='regC' id='rego' value='OT' /> Other:  <input type='text' name='eth' id='reg_com' /><br>
 </p>
 </form>
 

@@ -1,6 +1,6 @@
 //(if collecting data with php/server instead of MTurk)
-var experimentName = "snpi-pnq-exp1-demo";
-var submitAddress = "https://web.stanford.edu/~sunwooj/cgi-bin/process.php";
+// var experimentName = "snpi-pnq-exp1-demo";
+// var submitAddress = "https://web.stanford.edu/~sunwooj/cgi-bin/process.php";
 
 
 // List of stimuli
