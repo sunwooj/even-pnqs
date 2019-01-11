@@ -1,0 +1,294 @@
+<html>
+<head>
+
+<title>Language Experiment</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<!-- FOR MTURK -->
+<script type="text/javascript" src="https://sunwooj.github.io/experiments-shared/mmturkey.0.5.js"></script> 
+
+<!-- FOR PHP DATA GATHERING -->
+<!-- <script type="text/javascript" src="https://stanford.edu/~sunwooj/experiments/mmturkey-extension.js"></script>  -->
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+<script src="evenq-exp1-part1.js"></script>
+
+<link rel="stylesheet" href="https://sunwooj.github.io/experiments-shared/sliders/jquery-ui.css"></link>
+
+<link href ="../experiments-shared/evenq.css" rel="stylesheet" type="text/css"/>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+</head>
+
+
+
+
+
+<!-- main html body -->
+
+<body>
+
+<div class='slide' id='intro'>   
+    <div>
+
+<br>
+<img src="../experiments-shared/princeton-logo.png" alt="Princeton Program in Linguistics" width="240">
+<br>
+<p class='block-text2'>
+NOTE: PLEASE DO NOT OPEN THE SURVEY IN A NEW TAB. THIS WILL PREVENT MTURK FROM SUBMITTING THE RESULTS. THERE IS NO VERIFICATION CODE AT THE END. MTURK WILL SUBMIT THE RESULTS AUTOMATICALLY.
+</p>
+
+<p class='scrollbox'>
+LEGAL INFORMATION: <br>
+(Please scroll through the box and read the consent form before proceeding.)
+<br><br>
+We invite you to participate in a short research study on language production and comprehension. In this study, you will be asked to make a few judgements about English sentences in conversations. The study will take approximately 3 to 5 minutes to complete. 
+<br><br>
+There are no risks or benefits of any kind involved in this study. You will be paid for your participation at the posted rate.
+If you have read this form and have decided to participate in this experiment, please understand your participation is voluntary and you have the right to withdraw your consent or discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled. You have the right to refuse to do particular tasks. Your individual privacy will be maintained in all published and written data resulting from the study. You do not waive any legal rights or release Princeton University, its agents, or the investigator from liability for negligence. You may print this form for your records.
+<br><br>
+If you have any questions, please contact the principal investigator at sunwooj@princeton.edu.
+</p>
+
+<br><br>
+<button type='button' id='gotoInstructions'>Proceed to instructions</button>
+<br><br> 
+
+    </div>
+</div>
+
+
+
+
+<div class='slide' id='instructions'>
+    <div>
+
+<br><br>
+<p class='block-text'>In this experiment, you will make judgements on 10 English sentences, and on follow-ups to those sentences. </p>
+
+<p class='block-text'>Whenever a word is CAPITALIZED, it means that the speaker emphasized it in her/his pronunciation.</p>
+
+<p class='block-text'> <strong> This is a psychology experiment requiring undivided attention on your part. Please devote your attention solely to this task and read carefully.</strong> </p>
+
+<p class='block-text'> <strong><span style="font-weight: bold; color: #8C1515;">We will check to make sure that everything was read. Thanks for your participation!</span></strong> </p>
+
+<br>
+<button type='button' id='startbutton'>Start experiment</button>
+
+    </div>
+</div>
+
+
+
+
+<!-- Main experiment starts here -->
+<div class='slide' id='stage'>
+    <div>
+        <div>
+
+
+
+<p><span style="font-weight: bold; color: #8C1515;"> Situation <span class="item_number">{{}}</span> out of 10</span></p>
+
+<!-- Q1: Naturalness rating -->
+<form id='responseForm1'>
+
+<p class='block-text'>Q1: Please pay attention to what <span class='currentName1'>{{}}</span> says in the situation below. How natural does it sound as a sentence of English? 
+
+  <input type="hidden" class="slidervals" name="sliderval1" id="sliderval1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<!-- Q1: Picture with target sentence -->
+<img id="currentPic" width="440"><source src="#"></img>
+<br>
+
+<p class='center-text'>
+<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all natural 
+</span> 
+<span class='rightLabel'> Extremely natural &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<br>
+<span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
+<span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<div class="sliders" id="slider1"></div>
+<span style="font-size: 84%;">(Drag or click the sliders to left or right.)</span>
+</p>
+
+</form>
+
+
+
+<!-- Warning message in case Q1 doesn't get a response -->
+<p><span style='color: blue' id="warning"></span></p>
+
+<button type='button' id='nextpart'>Continue</button>
+
+
+
+
+<form id='responseForm2'>
+
+<p class='block-text'>Q2: Suppose that a few moments later, <span class='currentName1'>{{}}</span> continues to talk as below. How natural does this follow-up sound, given what <span class='currentName1'>{{}}</span> just said? 
+
+  <input type="hidden" class="slidervals" name="sliderval2" id="sliderval2" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<img id="currentFollowup" width="440"><source src="#"></img>
+<br>
+
+<p class='center-text'>
+<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all natural 
+</span> 
+<span class='rightLabel'> Extremely natural &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<br>
+<span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
+<span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<div class="sliders" id="slider2"></div>
+<span style="font-size: 84%;">(Drag or click the sliders to left or right.)</span>
+</p>
+
+</form>
+
+
+
+
+<!-- Optional responses -->
+<p id='optional1' class='block-text'>(Optional) Any additional comments?</p>
+
+<input type='text' id="commentBox1" class="commentBox" style="width: 400px;" value="" />
+
+
+<!-- Warning message in case any of Q1-Q2 doesn't get a response -->
+<p><span style='color: blue' id="warning2"></span></p>
+
+
+<button type='button' id='continue'>Continue</button>
+
+
+<p><span style="font-weight: bold; color: #8C1515;"> Situation <span class="item_number">{{}}</span> out of 10</span></p>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Demographic information slide -->
+<div class='slide' id='language'>
+    <div>
+
+
+<form id='languageForm'>
+
+<p class='questionSent'> 
+You are done with the main experiment. As a final step, we ask that you fill out the following brief exit questionnaire.
+</p> <br>
+
+
+<form id='eval'>
+<p class='questionSent'> 1. Did you enjoy the HIT?
+<br>
+<input type='radio' class='ev' name='ev' id='evalpos' value='yes' /> Yes <br>
+<input type='radio' class='ev' name='ev' id='evalneg' value='maybe' /> Not really <br>
+<input type='radio' class='ev' name='ev' id='evalneg2' value='no' /> No 
+</p>
+</form>
+
+
+<form id='englishNative'>
+<p class='questionSent'> 2. Are you a native speaker of American English? 
+<br>
+<input type='radio' class='nat' name='natC' id='AmE' value='Y' /> Yes <br>
+<input type='radio' class='nat' name='natC' id='nonAmE' value='N' /> No 
+<br>
+Please list any other languages that you speak fluently.
+<br>
+<input type='text' id='languages' value="" />
+</p>
+</form>
+
+
+<form id='ageForm'>
+<p class='questionSent'> 3. What is your age?
+<br>
+<input type='radio' class='age' name='ageC' id='20s' value='20s' /> 18-29 <br>
+<input type='radio' class='age' name='ageC' id='30s' value='30s' /> 30-39 <br>
+<input type='radio' class='age' name='ageC' id='40s' value='40s' /> 40-49 <br>
+<input type='radio' class='age' name='ageC' id='50s' value='50s' /> 50-59 <br>
+<input type='radio' class='age' name='ageC' id='60s' value='60s' /> 60+ <br>
+</p>
+</form>
+
+
+<form id='genderForm'>
+<p class='questionSent'> 4. How would you describe your gender? 
+<br>
+<input type='radio' class='gen' name='genC' id='mgen' value='M' /> Male <br>
+<input type='radio' class='gen' name='genC' id='fgen' value='F' /> Female <br>
+<input type='radio' class='gen' name='genC' id='nbgen' value='NB' /> Non-binary <br>
+<input type='radio' class='gen' name='genC' id='ogen' value='O' /> Other:  <input type='text' name='gen' id='ogen_com' />
+</p>
+</form>
+
+
+<form id='ethnicityForm'>
+<p class='questionSent'> 5. How would you describe your racial/ethnic identity?
+<br>
+<input type='radio' class='eth' name='ethC' id='afa' value='AFR' /> African American <br>
+<input type='radio' class='eth' name='ethC' id='asa' value='ASI' /> Asian American <br>
+<input type='radio' class='eth' name='ethC' id='ca' value='CAU' /> Caucasian <br>
+<input type='radio' class='eth' name='ethC' id='la' value='LAT' /> Latina/o/x <br>
+<input type='radio' class='eth' name='ethC' id='nta' value='NAT' /> Native American <br>
+<input type='radio' class='eth' name='ethC' id='oa' value='OTH' /> Other:  <input type='text' name='eth' id='oeth_com' /><br>
+</p>
+</form>
+
+
+<form id='regionForm'>
+<p class='questionSent'>6. Where would you say you grew up? (In other words: what is your hometown?) 
+<br>
+<input type='radio' class='reg' name='regC' id='nonus' value='nonUS' /> Outside the US <br>
+<input type='radio' class='reg' name='regC' id='o48s' value='non48' /> Outside the contiguous 48 states <br>
+<input type='radio' class='reg' name='regC' id='neweng' value='NE' /> New England <br>
+<input type='radio' class='reg' name='regC' id='midatl' value='MA' /> The Mid-Atlantic / Northeast Corridor (greater DC, Philadelphia, NY) <br>
+<input type='radio' class='reg' name='regC' id='midw' value='MW' /> The Midwest / The Great Lakes <br>
+<input type='radio' class='reg' name='regC' id='appal' value='SO' /> Appalachia / The South <br>
+<input type='radio' class='reg' name='regC' id='sw' value='SW' /> The Southwest <br>
+<input type='radio' class='reg' name='regC' id='rock' value='RO' /> The Rockies <br>
+<input type='radio' class='reg' name='regC' id='wc' value='WE' /> The West Coast <br>
+<input type='radio' class='reg' name='regC' id='rego' value='OT' /> Other:  <input type='text' name='eth' id='reg_com' /><br>
+</p>
+</form>
+
+
+
+<form id='commentsForm'>
+<p class='questionSent'>7. Any other comments about the questions above or the general experiment?
+<br>
+<input type='text' id='lang_com' value="" />
+</p>
+</form>
+
+
+</form>
+
+<br>
+
+
+<p><span style='color: blue' id="demoWarning"></span></p>
+
+<button type='button' id='lgsubmit'>Submit</button>
+
+    </div>
+</div>
+
+
+<div class='slide' id='finish'>
+<p>You're done with the experiment. Thanks so much for participating!</p>
+</div>
+
+</body>
+</html>

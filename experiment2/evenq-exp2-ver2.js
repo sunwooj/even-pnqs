@@ -7,17 +7,25 @@
 
 var stimuliList = shuffle([ 
 
-[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], "evenh-call-c2", "Paul might have called Maria", "Paul DIDN'T call Maria", "Paul called Maria", "Lenny"],
-["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], "evenh-solve-c2", "Jasper might have solved the monthly challenge", "Jasper DIDN'T solve the monthly challenge", "Jasper solved the monthly challenge", "Rochelle"]],
+[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2", "evenh-call-c2", "evenh-call-c2", "evenh-call-c2"], "Paul might have called Maria", "Paul DIDN'T call Maria", "Paul called Maria", "Lenny"],
+["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2"], "Jasper might have solved the monthly challenge", "Jasper DIDN'T solve the monthly challenge", "Jasper solved the monthly challenge", "Rochelle"],
+["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2", "evenh-call-c2", "evenh-call-c2", "evenh-call-c2"], "Paul might have called Maria", "Paul DIDN'T call Maria", "Paul called Maria", "Lenny"],
+["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2"], "Jasper might have solved the monthly challenge", "Jasper DIDN'T solve the monthly challenge", "Jasper solved the monthly challenge", "Rochelle"]],
 
-[["Jacob", ["evenl-grain-pnq-c1", "evenl-grain-evenq-c1", "evenl-grain-evenpnq-c1", "evenl-grain-pq-c1"], "evenl-grain-c2-neg", "there might be some truth to what Nancy said", "there ISN'T much truth to what Nancy said", "there is some truth to what Nancy said, at least a little bit", "Anna"],
-["Carrie", ["evenl-inkling-pnq-c1", "evenl-inkling-evenq-c1", "evenl-inkling-evenpnq-c1", "evenl-inkling-pq-c1"], "evenl-inkling-c2-neg", "Jim might have shown some amount of appreciation", "Jim DIDN'T show much appreciation", "Jim showed some amount of appreciation, at least a little bit", "David"]],
+[["Jacob", ["evenl-grain-pnq-c1", "evenl-grain-evenq-c1", "evenl-grain-evenpnq-c1", "evenl-grain-pq-c1"], ["evenl-grain-c2-neg", "evenl-grain-c2-neut", "evenl-grain-c2-neg", "evenl-grain-c2-neut"], "there might be some truth to what Nancy said", "there ISN'T much truth to what Nancy said", "there is some truth to what Nancy said, at least a little bit", "Anna"],
+["Carrie", ["evenl-inkling-pnq-c1", "evenl-inkling-evenq-c1", "evenl-inkling-evenpnq-c1", "evenl-inkling-pq-c1"], ["evenl-inkling-c2-neg", "evenl-inkling-c2-neut", "evenl-inkling-c2-neg", "evenl-inkling-c2-neut"], "Jim might have shown some amount of appreciation", "Jim DIDN'T show much appreciation", "Jim showed some amount of appreciation, at least a little bit", "David"],
+["Jacob", ["evenl-smallest-pnq-c1", "evenl-smallest-evenq-c1", "evenl-smallest-evenpnq-c1", "evenl-smallest-pq-c1"], ["evenl-smallest-c2-neut", "evenl-smallest-c2-neg", "evenl-smallest-c2-neg", "evenl-smallest-c2-neut"], "the leftover might fill some small container", "the leftover DOESN'T fill a container", "the leftover fills a container, at least the smallest one", "Anna"],
+["Carrie", ["evenl-hint-pnq-c1", "evenl-hint-evenq-c1", "evenl-hint-evenpnq-c1", "evenl-hint-pq-c1"], ["evenl-hint-c2-neut", "evenl-hint-c2-neg", "evenl-hint-c2-neg", "evenl-hint-c2-neut"], "Jim might have shown some amount of remorse", "Jim DIDN'T show much remorse", "Jim showed some amount of remorse, at least a little bit", "David"]],
 
-[["Andrew", ["mnpi-give-evenq-c1", "mnpi-give-evenpnq-c1", "mnpi-give-pq-c1", "mnpi-give-pnq-c1"], "mnpi-give-c2-neg", "Sam might care about the environment", "Sam DOESN'T care about the environment", "Sam cares about the environment, at least a little", "Prue"],
-["Alice", ["mnpi-lift-evenq-c1", "mnpi-lift-evenpnq-c1", "mnpi-lift-pq-c1", "mnpi-lift-pnq-c1"], "mnpi-lift-c2-neg", "Jane might have helped", "Jane DIDN'T help much", "Jane helped, at least a little", "Mark"]],
+[["Andrew", ["mnpi-give-evenq-c1", "mnpi-give-evenpnq-c1", "mnpi-give-pq-c1", "mnpi-give-pnq-c1"], ["mnpi-give-c2-neut", "mnpi-give-c2-neg", "mnpi-give-c2-neut", "mnpi-give-c2-neg"], "Sam might care about the environment", "Sam DOESN'T care about the environment", "Sam cares about the environment, at least a little", "Prue"],
+["Alice", ["mnpi-lift-evenq-c1", "mnpi-lift-evenpnq-c1", "mnpi-lift-pq-c1", "mnpi-lift-pnq-c1"], ["mnpi-lift-c2-neut", "mnpi-lift-c2-neg", "mnpi-lift-c2-neut", "mnpi-lift-c2-neg"], "Jane might have helped", "Jane DIDN'T help much", "Jane helped, at least a little", "Mark"],
+["Andrew", ["mnpi-clue-evenq-c1", "mnpi-clue-evenpnq-c1", "mnpi-clue-pq-c1", "mnpi-clue-pnq-c1"], ["mnpi-clue-c2-neg", "mnpi-clue-c2-neg", "mnpi-clue-c2-neut", "mnpi-clue-c2-neut"], "Sam might know how she feels", "Sam DOESN'T know how she feels", "Sam knows how Marianna feels, at least a little", "Prue"],
+["Alice", ["mnpi-wink-evenq-c1", "mnpi-wink-evenpnq-c1", "mnpi-wink-pq-c1", "mnpi-wink-pnq-c1"], ["mnpi-wink-c2-neg", "mnpi-wink-c2-neg", "mnpi-wink-c2-neut", "mnpi-wink-c2-neut"], "Jane might have slept", "Jane DIDN'T sleep much", "Jane slept, at least a little", "Mark"]],
 
-[["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq-c1", "snpi-anything-pnq-c1", "snpi-anything-evenq-c1"], "snpi-anything-c2-neg", "Nora might have brought something", "Nora DIDN'T bring much", "Nora brought something, at least a small thing", "Max"],
-["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], "snpi-anytime-c2-neg", "Sally might have some time to spare", "Sally DOESN'T have time", "Sally has time, at least a little bit", "Alice"]]
+[["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq-c1", "snpi-anything-pnq-c1", "snpi-anything-evenq-c1"], ["snpi-anything-c2-neg", "snpi-anything-c2-neut", "snpi-anything-c2-neg", "snpi-anything-c2-neut"], "Nora might have brought something", "Nora DIDN'T bring much", "Nora brought something, at least a small thing", "Max"],
+["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], ["snpi-anytime-c2-neg", "snpi-anytime-c2-neut", "snpi-anytime-c2-neg", "snpi-anytime-c2-neut"], "Sally might have some time to spare", "Sally DOESN'T have time", "Sally has time, at least a little bit", "Alice"],
+["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq2-c1", "snpi-anything-pnq2-c1", "snpi-anything-evenq-c1"], ["snpi-anything-c2-neg", "snpi-anything-c2-neut", "snpi-anything-c2-neut", "snpi-anything-c2-neg"], "Nora might have brought something", "Nora DIDN'T bring much", "Nora brought something, at least a small thing", "Max"],
+["Roy", ["snpi-ever-evenpnq-c1", "snpi-ever-pq-c1", "snpi-ever-pnq-c1", "snpi-ever-evenq-c1"], ["snpi-ever-c2-neg", "snpi-ever-c2-neut", "snpi-ever-c2-neut", "snpi-ever-c2-neg"], "Sally might have been abroad", "Sally HASN'T been abroad", "Sally has been abroad, at least once or twice", "Alice"]]
 
 ]);
 
@@ -91,6 +99,7 @@ function stepExperiment () {
             else {
                 demoWarning = "Please complete the questionnaire in order to finish the experiment and submit the HIT.";
             $("#demoWarning").html(demoWarning);
+            document.body.scrollTop = document.body.scrollHeight;
             }
 
             } ) }
@@ -98,38 +107,18 @@ function stepExperiment () {
     else {
 
         trialnum += 1;
-        stimuliSet = shuffle(stimuliList[trialnum-1]);
+        stimuliSet = stimuliList[trialnum-1];
         stimuliVector = stimuliSet[stimRandom];
         name1Stim = stimuliVector[0];
         qtypeVector = stimuliVector[1];
         qtypeStim = qtypeVector[qtypeRandom];
-        pic2Stim = stimuliVector[2];
+        prevVector = stimuliVector[2];
+        pic2Stim = prevVector[qtypeRandom];
         sent1Stim = stimuliVector[3];
         sent2Stim = stimuliVector[4];
         sent3Stim = stimuliVector[5];
         name2Stim = stimuliVector[6];
 
-        // stimuliVector = stimuliList[conditionRandom];
-        // condition = stimuliVector[0];
-        // contextVector = shuffle(stimuliVector[1]);
-
-        // if (trialnum < 3) {
-        //     baseStimVector = basefillerList[trialnum-1];
-        //     nameStim = baseStimVector[0];
-        //     qtypeStim = baseStimVector[1];
-        //     followupStim = baseStimVector[2];
-        // }
-
-        // else {
-        //     stimuliSet = shuffle(stimuliList[trialnum-3]);
-        //     stimuliVector = stimuliSet[stimRandom];
-        //     nameStim = stimuliVector[0];
-
-        //     qtypeVector = stimuliVector[1];
-        //     followupVector = stimuliVector[2];
-        //     qtypeStim = qtypeVector[qtypeRandom];
-        //     followupStim = followupVector[stimRandom];
-        // }
                
         $(".item_number").html(trialnum);  
 
@@ -187,6 +176,7 @@ function stepExperiment () {
             else  {
                 warning = "Please answer the question to continue. Make sure that you have dragged or clicked on the slider button so that the slider is colored and the button displays numeric values.";
                 $("#warning").html(warning);
+                document.body.scrollTop = document.body.scrollHeight;
             }
         });
 
@@ -235,6 +225,7 @@ function stepExperiment () {
             else { // If any of the questions is not answered:
                 warning2 = "Please answer all the questions to continue. Make sure that you have dragged or clicked on the slider buttons so that the sliders are colored and the buttons display numeric values.";
                 $("#warning2").html(warning2);
+                document.body.scrollTop = document.body.scrollHeight;
             }
         });
     }

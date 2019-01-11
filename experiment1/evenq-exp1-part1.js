@@ -7,35 +7,35 @@
 
 var stimuliList = shuffle([ 
 
-[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["call-pos", "call-neg"], ["Of course he did.", "Of course he didn't."]],
-["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["solve-pos", "solve-neg"], ["Of course he did.", "Of course he didn't."]]],
+[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-res-pos", "evenh-call-res-neg"]],
+["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-res-pos", "evenh-solve-res-neg"]]],
 
-[["Jacob", ["evenl-grain-pnq-c1", "evenl-grain-evenq-c1", "evenl-grain-evenpnq-c1", "evenl-grain-pq-c1"], ["grain-neg", "grain-pos"], ["Of course he didn't.", "Of course he did."]],
-["Carrie", ["evenl-inkling-pnq-c1", "evenl-inkling-evenq-c1", "evenl-inkling-evenpnq-c1", "evenl-inkling-pq-c1"], ["inkling-neg", "inkling-pos"], ["Of course there isn't.", "Of course there is."]]],
+[["Jacob", ["evenl-grain-pnq-c1", "evenl-grain-evenq-c1", "evenl-grain-evenpnq-c1", "evenl-grain-pq-c1"], ["evenl-grain-res-neg", "evenl-grain-res-pos"]],
+["Carrie", ["evenl-inkling-pnq-c1", "evenl-inkling-evenq-c1", "evenl-inkling-evenpnq-c1", "evenl-inkling-pq-c1"], ["evenl-inkling-res-neg", "evenl-inkling-res-pos"]]],
 
-[["Andrew", ["mnpi-give-evenq-c1", "mnpi-give-evenpnq-c1", "mnpi-give-pq-c1", "mnpi-give-pnq-c1"], ["give-pos", "give-neg"], ["Of course he does.", "Of course he doesn't."]],
-["Alice", ["mnpi-lift-evenq-c1", "mnpi-lift-evenpnq-c1", "mnpi-lift-pq-c1", "mnpi-lift-pnq-c1"], ["lift-pos", "lift-neg"], ["Of course she did.", "Of course she didn't."]]],
+[["Andrew", ["mnpi-give-evenq-c1", "mnpi-give-evenpnq-c1", "mnpi-give-pq-c1", "mnpi-give-pnq-c1"], ["mnpi-give-res-pos", "mnpi-give-res-neg"]],
+["Alice", ["mnpi-lift-evenq-c1", "mnpi-lift-evenpnq-c1", "mnpi-lift-pq-c1", "mnpi-lift-pnq-c1"], ["mnpi-lift-res-pos", "mnpi-lift-res-neg"]]],
 
-[["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq-c1", "snpi-anything-pnq-c1", "snpi-anything-evenq-c1"], ["anything-neg", "anything-pos"], ["Of course she didn't.", "Of course she did."]],
-["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], ["anytime-neg", "anytime-pos"], ["Of course she doesn't.", "Of course she does."]]],
+[["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq-c1", "snpi-anything-pnq-c1", "snpi-anything-evenq-c1"], ["snpi-anything-res-neg", "snpi-anything-res-pos"]],
+["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], ["snpi-anytime-res-neg", "snpi-anytime-res-pos"]]],
 
-[["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"], ["Of course she did.", "Of course she didn't."]],
-["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"], ["Of course she did.", "Of course she didn't."]]],
+[["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["filler-too-res-pos", "filler-too-res-neg"]],
+["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["filler-too-res-pos", "filler-too-res-neg"]]],
 
-[["Lydia", ["filler-anynot-filler1-c1", "filler-anynot-filler1-c1", "filler-anynot-filler1-c1", "filler-anynot-filler1-c1"], ["anynot-neg", "anynot-pos"], ["No one was there, right?", "Tell me who you saw."]],
-["Lydia", ["filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1"], ["everclimb-neg", "everclimb-pos"], ["Probably nobody, right?", "I know James Burton did. But who else?"]]],
+[["Lydia", ["filler-anynot-filler1-c1", "filler-anynot-filler1-c1", "filler-anynot-filler1-c1", "filler-anynot-filler1-c1"], ["filler-anynot-res-neg", "filler-anynot-res-pos"]],
+["Lydia", ["filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1", "filler-everclimb-filler4-c1"], ["filler-everclimb-res-neg", "filler-everclimb-res-pos"]]],
 
-[["Beth", ["filler-false-base3-c1", "filler-false-base3-c1", "filler-false-base3-c1", "filler-false-base3-c1"], ["false3-neg", "false3-neg"], ["Jane might not have children.", "Jane might not have children."]],
-["Beth", ["filler-false-base3-c1", "filler-false-base3-c1", "filler-false-base3-c1", "filler-false-base3-c1"], ["false3-neg", "false3-neg"], ["Jane might not have children.", "Jane might not have children."]]],
+[["Beth", ["filler-base3-false-c1", "filler-base3-false-c1", "filler-base3-false-c1", "filler-base3-false-c1"], ["filler-base3-res-false", "filler-base3-res-false"]],
+["Beth", ["filler-base3-false-c1", "filler-base3-false-c1", "filler-base3-false-c1", "filler-base3-false-c1"], ["filler-base3-res-false", "filler-base3-res-false"]]],
 
-[["Richard", ["filler-false-base4-c1", "filler-false-base4-c1", "filler-false-base4-c1", "filler-false-base4-c1"], ["false4-pos", "false4-pos"], ["I mean, lots of people go there but I haven't been.", "I mean, lots of people go there but I haven't been."]],
-["Richard", ["filler-false-base4-c1", "filler-false-base4-c1", "filler-false-base4-c1", "filler-false-base4-c1"], ["false4-pos", "false4-pos"], ["I mean, lots of people go there but I haven't been.", "I mean, lots of people go there but I haven't been."]]]
+[["Richard", ["filler-base4-false-c1", "filler-base4-false-c1", "filler-base4-false-c1", "filler-base4-false-c1"], ["filler-base4-res-true", "filler-base4-res-true"]],
+["Richard", ["filler-base4-false-c1", "filler-base4-false-c1", "filler-base4-false-c1", "filler-base4-false-c1"], ["filler-base4-res-true", "filler-base4-res-true"]]]
 
 ]);
 
 // Fillers that set baselines in the first two trials
 var basefillerList = shuffle([
-["Prue", "filler-true-base1-c1", "true-neg"], ["Dean", "filler-false-base2-c1", "false-pos"]
+["Prue", "filler-base1-true-c1", "filler-base1-res-false"], ["Dean", "filler-base2-false-c1", "filler-base2-res-true"]
 ]);
 
 
