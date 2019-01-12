@@ -7,10 +7,10 @@
 
 var stimuliList = shuffle([ 
 
-[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2", "evenh-call-c2", "evenh-call-c2", "evenh-call-c2"], "Paul might have called Maria", "Paul DIDN'T call Maria", "Paul called Maria", "Lenny"],
-["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2"], "Jasper might have solved the monthly challenge", "Jasper DIDN'T solve the monthly challenge", "Jasper solved the monthly challenge", "Rochelle"],
-["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2", "evenh-call-c2", "evenh-call-c2", "evenh-call-c2"], "Paul might have called Maria", "Paul DIDN'T call Maria", "Paul called Maria", "Lenny"],
-["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2"], "Jasper might have solved the monthly challenge", "Jasper DIDN'T solve the monthly challenge", "Jasper solved the monthly challenge", "Rochelle"]],
+[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2-pos", "evenh-call-c2-neg", "evenh-call-c2-neg", "evenh-call-c2-neg"], "Paul might have called Maria", "Paul DIDN'T call Maria", "Paul called Maria", "Lenny"],
+["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2-pos", "evenh-solve-c2-neg", "evenh-solve-c2-neg", "evenh-solve-c2-neg"], "Jasper might have solved the monthly challenge", "Jasper DIDN'T solve the monthly challenge", "Jasper solved the monthly challenge", "Rochelle"],
+["Sally", ["evenh-praise-pq-c1", "evenh-praise-pnq-c1", "evenh-praise-evenq-c1", "evenh-praise-evenpnq-c1"], ["evenh-praise-c2-neut", "evenh-praise-c2-neut", "evenh-praise-c2-pos", "evenh-praise-c2-pos"], "Paul might have praised Minta", "Paul DIDN'T praise Minta", "Paul praised Minta", "Lenny"],
+["Matt", ["evenh-read-pq-c1", "evenh-read-pnq-c1", "evenh-read-evenq-c1", "evenh-read-evenpnq-c1"], ["evenh-read-c2-neut", "evenh-read-c2-neut", "evenh-read-c2-pos", "evenh-read-c2-pos"], "Jasper might have read the longest book", "Jasper DIDN'T read the longest book", "Jasper read the longest book", "Rochelle"]],
 
 [["Jacob", ["evenl-grain-pnq-c1", "evenl-grain-evenq-c1", "evenl-grain-evenpnq-c1", "evenl-grain-pq-c1"], ["evenl-grain-c2-neg", "evenl-grain-c2-neut", "evenl-grain-c2-neg", "evenl-grain-c2-neut"], "there might be some truth to what Nancy said", "there ISN'T much truth to what Nancy said", "there is some truth to what Nancy said, at least a little bit", "Anna"],
 ["Carrie", ["evenl-inkling-pnq-c1", "evenl-inkling-evenq-c1", "evenl-inkling-evenpnq-c1", "evenl-inkling-pq-c1"], ["evenl-inkling-c2-neg", "evenl-inkling-c2-neut", "evenl-inkling-c2-neg", "evenl-inkling-c2-neut"], "Jim might have shown some amount of appreciation", "Jim DIDN'T show much appreciation", "Jim showed some amount of appreciation, at least a little bit", "David"],
@@ -55,7 +55,7 @@ function showSlide (slideName) {
 
 
 
-var stimRandom = Math.floor(Math.random() * 2);
+var stimRandom = Math.floor(Math.random() * 4);
 var qtypeRandom = Math.floor(Math.random() * 4);
 
 
