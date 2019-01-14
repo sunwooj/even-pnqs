@@ -7,10 +7,10 @@
 
 var stimuliList = shuffle([ 
 
-[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2", "evenh-call-c2", "evenh-call-c2"]],
-["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2"]],
-["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2", "evenh-call-c2", "evenh-call-c2"]],
-["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2", "evenh-solve-c2", "evenh-solve-c2"]]],
+[["Sally", ["evenh-call-pq-c1", "evenh-call-pnq-c1", "evenh-call-evenq-c1", "evenh-call-evenpnq-c1"], ["evenh-call-c2-pos", "evenh-call-c2-neut", "evenh-call-c2-neg"]],
+["Matt", ["evenh-solve-pq-c1", "evenh-solve-pnq-c1", "evenh-solve-evenq-c1", "evenh-solve-evenpnq-c1"], ["evenh-solve-c2-pos", "evenh-solve-c2-neut", "evenh-solve-c2-neg"]],
+["Sally", ["evenh-praise-pq-c1", "evenh-praise-pnq-c1", "evenh-praise-evenq-c1", "evenh-praise-evenpnq-c1"], ["evenh-praise-c2-pos", "evenh-praise-c2-neut", "evenh-praise-c2-neg"]],
+["Matt", ["evenh-read-pq-c1", "evenh-read-pnq-c1", "evenh-read-evenq-c1", "evenh-read-evenpnq-c1"], ["evenh-read-c2-pos", "evenh-read-c2-neut", "evenh-read-c2-neg"]]],
 
 [["Jacob", ["evenl-smallest-pnq-c1", "evenl-smallest-evenq-c1", "evenl-smallest-evenpnq-c1", "evenl-smallest-pq-c1"], ["evenl-smallest-c2-neut", "evenl-smallest-c2-neut2", "evenl-smallest-c2-neg"]],
 ["Carrie", ["evenl-hint-pnq-c1", "evenl-hint-evenq-c1", "evenl-hint-evenpnq-c1", "evenl-hint-pq-c1"], ["evenl-hint-c2-neut", "evenl-hint-c2-neut2", "evenl-hint-c2-neg"]],
@@ -23,25 +23,25 @@ var stimuliList = shuffle([
 ["Alice", ["mnpi-lift-evenq-c1", "mnpi-lift-evenpnq-c1", "mnpi-lift-pq-c1", "mnpi-lift-pnq-c1"], ["mnpi-lift-c2-neut2", "mnpi-lift-c2-neg", "mnpi-lift-c2-neut"]]],
 
 [["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq2-c1", "snpi-anything-pnq2-c1", "snpi-anything-evenq-c1"], ["snpi-anything-c2-neg", "snpi-anything-c2-neut", "snpi-anything-c2-neut2"]],
-["Roy", ["snpi-ever-evenpnq-c1", "snpi-ever-pq-c1", "snpi-ever-pnq-c1", "snpi-ever-evenq-c1"], ["snpi-ever-c2-neg", "snpi-ever-c2-neut", "snpi-ever-c2-neut2"]],
+["Roy", ["snpi-ever-evenpnq-c1", "snpi-ever-pq2-c1", "snpi-ever-pnq2-c1", "snpi-ever-evenq-c1"], ["snpi-ever-c2-neg", "snpi-ever-c2-neut", "snpi-ever-c2-neut2"]],
 ["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq-c1", "snpi-anything-pnq-c1", "snpi-anything-evenq-c1"], ["snpi-anything-c2-neg", "snpi-anything-c2-neut", "snpi-anything-c2-neut2"]],
-["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], ["snpi-anytime-c2-neg", "snpi-anytime-c2-neut", "snpi-anytime-c2-neut2"]]],
+["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], ["snpi-anytime-c2-neg", "snpi-anytime-c2-neut", "snpi-anytime-c2-neut2"]]]
 
-[["Lydia", ["filler-someclimb-yespre-c1", "filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]],
-["Lydia", ["filler-someclimb-yespre-c1", "filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]],
-["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"]],
-["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"]]],
+// [["Lydia", ["filler-someclimb-yespre-c1", "filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]],
+// ["Lydia", ["filler-someclimb-yespre-c1", "filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]],
+// ["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"]],
+// ["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"]]],
 
-[["Beth", ["filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1"], ["false3-neg", "false3-neg"]],
-["Beth", ["filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1"], ["false3b-neg", "false3b-neg"]],
-["Richard", ["filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1"], ["false4b-pos", "false4b-pos"]],
-["Richard", ["filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1"], ["false4b-pos", "false4b-pos"]]]
+// [["Beth", ["filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1"], ["false3-neg", "false3-neg"]],
+// ["Beth", ["filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1"], ["false3b-neg", "false3b-neg"]],
+// ["Richard", ["filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1"], ["false4b-pos", "false4b-pos"]],
+// ["Richard", ["filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1"], ["false4b-pos", "false4b-pos"]]]
 
 ]);
 
 // Fillers that set baselines in the first two trials
 var basefillerList = shuffle([
-["Prue", "filler-true-base1-c1", "true-neg"], ["Dean", "filler-false-base2b-c1", "false2b-pos"]
+["Prue", ["filler-base1b-true-c1", "filler-base1b-true-c1"], ["filler-base1b-res-false", "filler-base1b-res-false"]], ["Dean", ["filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]]
 ]);
 
 
@@ -69,14 +69,15 @@ function showSlide (slideName) {
 }
 
 
-
-var stimRandom = Math.floor(Math.random() * 2);
+var fillerRandom = Math.floor(Math.random() * 2);
+var stimRandom = Math.floor(Math.random() * 4);
+var contRandom = Math.floor(Math.random() * 3);
 var qtypeRandom = Math.floor(Math.random() * 4);
 
 
 
 function stepExperiment () {
-    if (trialnum == 10) { // end the experiment. 
+    if (trialnum == 6) { // end the experiment. 
         document.body.scrollTop = document.documentElement.scrollTop = 0;
         showSlide("language");
         $('#lgsubmit').click(function() {
@@ -129,8 +130,11 @@ function stepExperiment () {
         if (trialnum < 3) {
             baseStimVector = basefillerList[trialnum-1];
             nameStim = baseStimVector[0];
-            qtypeStim = baseStimVector[1];
-            followupStim = baseStimVector[2];
+            contVector = baseStimVector[1];
+            contStim = contVector[fillerRandom];
+            stimuliVector = shuffle(baseStimVector[2]);
+            qtypeStim = stimuliVector[fillerRandom];
+            
         }
 
         else {
@@ -139,9 +143,9 @@ function stepExperiment () {
             nameStim = stimuliVector[0];
 
             qtypeVector = stimuliVector[1];
-            followupVector = stimuliVector[2];
+            contVector = stimuliVector[2];
             qtypeStim = qtypeVector[qtypeRandom];
-            followupStim = followupVector[stimRandom];
+            contStim = contVector[contRandom];
         }
                
         $(".item_number").html(trialnum);  
@@ -150,9 +154,9 @@ function stepExperiment () {
 
         
         // Tell HTML which image file will display
-        document.getElementById('currentPic').src = "../stimuli/" + qtypeStim + ".png";
+        document.getElementById('currentCont').src = "../stimuli/" + contStim + ".png";
 
-        document.getElementById('currentFollowup').src = "../stimuli/" + followupStim + ".png";
+        document.getElementById('currentPic').src = "../stimuli/" + qtypeStim + ".png";
 
         document.body.scrollTop = document.documentElement.scrollTop = 0;
 
@@ -165,7 +169,7 @@ function stepExperiment () {
         $('#continue').hide();
 
         $('#nextpart').click(function() {
-            if  (slider1.style.backgroundColor != "") {
+            // if  (slider1.style.backgroundColor != "") {
                 $("#nextpart").unbind('click');
                 $('#nextpart').hide();
 
@@ -175,20 +179,20 @@ function stepExperiment () {
                 $('#continue').show();
 
                 $("#warning").html("");
-            }
+            // }
 
-            else  {
-                warning = "Please answer the question to continue. Make sure that you have dragged or clicked on the slider button so that the slider is colored and the button displays numeric values.";
-                $("#warning").html(warning);
-                document.body.scrollTop = document.body.scrollHeight;
-            }
+            // else  {
+            //     warning = "Please answer the question to continue. Make sure that you have dragged or clicked on the slider button so that the slider is colored and the button displays numeric values.";
+            //     $("#warning").html(warning);
+            //     document.body.scrollTop = document.body.scrollHeight;
+            // }
         });
 
 
         $('#continue').click(function() {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-            var sliderResponse1 = $('#sliderval1').val();
+            // var sliderResponse1 = $('#sliderval1').val();
             var sliderResponse2 = $('#sliderval2').val();
 
             var commentResponse1 = $('#commentBox1').val();
@@ -196,7 +200,7 @@ function stepExperiment () {
 
 
             // Check for valid answers; all questions must be answered
-            if  (slider1.style.backgroundColor != "" && slider2.style.backgroundColor != "") {
+            if  (slider2.style.backgroundColor != "") {
 
                 // make continue button available for re-use
                 $("#continue").unbind('click');
@@ -207,10 +211,10 @@ function stepExperiment () {
 
                 trial = {};
                 trial.name1 = nameStim;
+                trial.context = contStim;
                 trial.qtype = qtypeStim;
-                trial.followup = followupStim;
-                trial.sent1 = sliderResponse1;
-                trial.sent2 = sliderResponse2;
+                // trial.sent1 = sliderResponse1;
+                trial.naturalness = sliderResponse2;
                 trial.comment = commentResponse1;
                 data["trial" + trialnum] = trial;
 
@@ -223,7 +227,7 @@ function stepExperiment () {
                     }
 
             else { // If any of the questions is not answered:
-                warning2 = "Please answer all the questions to continue. Make sure that you have dragged or clicked on the slider buttons so that the sliders are colored and the buttons display numeric values.";
+                warning2 = "Please answer the question to continue. Make sure that you have dragged or clicked on the slider button so that the slider is colored and the button displays a numeric value.";
                 $("#warning2").html(warning2);
                 document.body.scrollTop = document.body.scrollHeight;
             }
@@ -234,32 +238,32 @@ function stepExperiment () {
 
 // Codes for sliders
 // Slider1
-$( function() {
-    $( "#slider1" ).slider({
-      value: 50,
-      min: 0,
-      max: 100,
-      step: 1,
-      slide: function( event, ui ) {
+// $( function() {
+//     $( "#slider1" ).slider({
+//       value: 50,
+//       min: 0,
+//       max: 100,
+//       step: 1,
+//       slide: function( event, ui ) {
 
-        $("#slider1").css({"background": "#CCFFFF"});
-        $("#slider1 .ui-slider-handle").css({
-                      "background": "#E0F5FF",
-                      "border-color": "#001F29"
-                  });
+//         $("#slider1").css({"background": "#CCFFFF"});
+//         $("#slider1 .ui-slider-handle").css({
+//                       "background": "#E0F5FF",
+//                       "border-color": "#001F29"
+//                   });
 
-        m_val = ui.value;
-        if (m_val < 0) {
-            $(ui.handle).text("?");
-        }
-        else {
-            $(ui.handle).text(m_val);
-        }
-        $( "#sliderval1" ).val( ui.value );
-      }
-    });
-    $( "#sliderval1" ).val( $( "#slider1" ).slider( "value" ) );
-  } );
+//         m_val = ui.value;
+//         if (m_val < 0) {
+//             $(ui.handle).text("?");
+//         }
+//         else {
+//             $(ui.handle).text(m_val);
+//         }
+//         $( "#sliderval1" ).val( ui.value );
+//       }
+//     });
+//     $( "#sliderval1" ).val( $( "#slider1" ).slider( "value" ) );
+//   } );
 
 
 // Slider2

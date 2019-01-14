@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
-<script src="evenq-exp3.js"></script>
+<script src="evenq-exp2-part1.js"></script>
 
 <link rel="stylesheet" href="https://sunwooj.github.io/experiments-shared/sliders/jquery-ui.css"></link>
 
@@ -46,7 +46,7 @@ NOTE: PLEASE DO NOT OPEN THE SURVEY IN A NEW TAB. THIS WILL PREVENT MTURK FROM S
 LEGAL INFORMATION: <br>
 (Please scroll through the box and read the consent form before proceeding.)
 <br><br>
-We invite you to participate in a short research study on language production and comprehension. In this study, you will be asked to make a few judgements about English sentences in conversations. The study will take approximately 2 to 4 minutes to complete. 
+We invite you to participate in a short research study on language production and comprehension. In this study, you will be asked to make a few judgements about English sentences in conversations. The study will take approximately 4 to 5 minutes to complete. 
 <br><br>
 There are no risks or benefits of any kind involved in this study. You will be paid for your participation at the posted rate.
 If you have read this form and have decided to participate in this experiment, please understand your participation is voluntary and you have the right to withdraw your consent or discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled. You have the right to refuse to do particular tasks. Your individual privacy will be maintained in all published and written data resulting from the study. You do not waive any legal rights or release Princeton University, its agents, or the investigator from liability for negligence. You may print this form for your records.
@@ -68,13 +68,13 @@ If you have any questions, please contact the principal investigator at sunwooj@
     <div>
 
 <br><br>
-<p class='block-text'>In this experiment, you will make judgements on the naturalness of 6 English sentences given their preceding contexts. </p>
+<p class='block-text'>In this experiment, you will be making judgements after reading 4 cartoons that involve two people talking. </p>
 
-<p class='block-text'>Whenever a word is CAPITALIZED, it means that the speaker emphasized it in her/his pronunciation.</p>
+<p class='block-text'>For each cartoon, the questions will be asked in two parts: one before revealing the previous context, and one after revealing it. </p>
 
-<p class='block-text'> <strong> This is a psychology experiment requiring undivided attention on your part. Please devote your attention solely to this task and read carefully.</strong> </p>
+<p class='block-text'>Whenever a word is CAPITALIZED in the cartoon, it means that the speaker in the cartoon emphasized the word in her/his pronunciation.</p>
 
-<p class='block-text'> <strong><span style="font-weight: bold; color: #8C1515;">We will check to make sure that everything was read. Thanks for your participation!</span></strong> </p>
+<p class='block-text'> <strong> This is a psychology experiment requiring undivided attention on your part. Please devote your attention solely to this task and read carefully. <span style="font-weight: bold; color: #8C1515;">We will check to make sure that everything was read. Thanks for your participation!</span></strong> </p>
 
 <br>
 <button type='button' id='startbutton'>Start experiment</button>
@@ -92,59 +92,67 @@ If you have any questions, please contact the principal investigator at sunwooj@
 
 
 
-<p><span style="font-weight: bold; color: #8C1515;"> Situation <span class="item_number">{{}}</span> out of 6</span></p>
+<p><span style="font-weight: bold; color: #8C1515;"> Situation <span class="item_number">{{}}</span> out of 4</span> <br> <span style="font-size: 84%;"> 
+(Part <span class="part_number">{{}}</span> out of 2)</span></p>
 
-<!-- Q1: Naturalness rating -->
-<form id='responseForm1'>
 
-<p class='block-text'>Please pay attention to the dialogue context below.
+
+
+<!-- Dialogue stimulus -->
+<form id='pictureForm'>
+
+<p class='block-text2'> <span id="prompt1">Please take a look at the dialogue below and answer a few questions. Preceding parts of the cartoon, which are hidden, have been labelled (1) and (2).</span>
+<span id="prompt2">Suppose that the preceding context was as revealed below. Please answer a few more questions.</span>
 </p>
 
-<!--   <input type="hidden" class="slidervals" name="sliderval1" id="sliderval1" readonly style="border:0; color:#f6931f; font-weight:bold;">
-</p> -->
-
-<!-- Q1: Picture with target sentence -->
-<img id="currentCont" width="440"><source src="#"></img>
+&nbsp;&nbsp;<img id="currentHidden" width="408"><source src="#"></img>
 <br>
-
-<!-- <p class='center-text'>
-<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all natural 
-</span> 
-<span class='rightLabel'> Extremely natural &nbsp; &nbsp; &nbsp; &nbsp; </span>
+&nbsp;&nbsp;<img id="currentPic1" width="408"><source src="#"></img>
 <br>
-<span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
-<span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
-<div class="sliders" id="slider1"></div>
-<span style="font-size: 84%;">(Drag or click the sliders to left or right.)</span>
-</p> -->
+&nbsp;&#8202;&#8202;<img id="currentPic2" width="414"><source src="#"></img>
 
 </form>
 
 
 
-<!-- Warning message in case Q1 doesn't get a response -->
-<p><span style='color: blue' id="warning"></span></p>
+<form id='responseForm1'>
 
-<button type='button' id='nextpart'>Continue</button>
-
-
-
-
-<form id='responseForm2'>
-
-<p class='block-text'>In this context, suppose that <span class='currentName1'>{{}}</span> responds as follows. How natural does this follow-up sound, given the context above?
-
-  <input type="hidden" class="slidervals" name="sliderval2" id="sliderval2" readonly style="border:0; color:#f6931f; font-weight:bold;">
+<p class='block-text2'>Q1: Given what you saw above, how likely is the following statement? 
 </p>
 
-<img id="currentPic" width="440"><source src="#"></img>
+<p class='block-text' style='font-weight: bold;'>
+<span class='currentName1'>{{}}</span> thinks that <span class='currentSent1'>{{}}</span>.
+</p>
+
+<input type="hidden" class="slidervals" name="sliderval1" id="sliderval1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+
+<p class='center-text'>
+<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all likely
+</span> 
+<span class='rightLabel'> Extremely likely &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<br>
+<span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
+<span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<div class="sliders" id="slider1"></div>
+<span style="font-size: 84%;">(Drag or click the sliders to left or right.)</span>
+</p>
+
 <br>
 
 
+<p class='block-text2'>Q2: Given what you saw above, how likely is the following statement? 
+</p>
+
+<p class='block-text' style='font-weight: bold;'>
+In (2), before <span class='currentName1'>{{}}</span> spoke, <span class='currentName2'>{{}}</span> indicated or implied that <span class='currentSent2'>{{}}</span>.
+</p>
+
+<input type="hidden" class="slidervals" name="sliderval2" id="sliderval2" readonly style="border:0; color:#f6931f; font-weight:bold;">
+
 <p class='center-text'>
-<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all natural 
+<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all likely
 </span> 
-<span class='rightLabel'> Extremely natural &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<span class='rightLabel'> Extremely likely &nbsp; &nbsp; &nbsp; &nbsp; </span>
 <br>
 <span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
 <span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
@@ -155,12 +163,85 @@ If you have any questions, please contact the principal investigator at sunwooj@
 </form>
 
 
+<p><span style='color: blue' id="warning"></span></p>
+
+<p class='center-block' id='commit' style='color:#8C1515; font-size: 84%;'> Please commit to your responses as you cannot come back to this section after clicking on continue.
+</p>
+
+<button type='button' id='nextpart'>Continue</button>
+<!-- <br><br> -->
+
+
+
+
+<form id='responseForm2'>
+
+<p class='block-text2'>Q3: Given what you saw above, how likely is the following statement? 
+</p>
+
+<p class='block-text' style='font-weight: bold;'>
+In (1), before <span class='currentName2'>{{}}</span> spoke, <span class='currentName1'>{{}}</span> believed that <span class='currentSent3'>{{}}</span>.
+</p>
+
+  <input type="hidden" class="slidervals" name="sliderval3" id="sliderval3" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<p class='center-text'>
+<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all likely 
+</span> 
+<span class='rightLabel'> Extremely likely &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<br>
+<span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
+<span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<div class="sliders" id="slider3"></div>
+<span style="font-size: 84%;">(Drag or click the sliders to left or right.)</span>
+</p>
+
+
+<p class='block-text2'>Q4: How surprised does <span class='currentName1'>{{}}</span> sound at the end of the cartoon?
+<!-- that <span class='currentSent2'>{{}}</span>? -->
+
+  <input type="hidden" class="slidervals" name="sliderval4" id="sliderval4" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<p class='center-text'>
+<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all surprised
+</span> 
+<span class='rightLabel'> Extremely surprised &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<br>
+<span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
+<span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<div class="sliders" id="slider4"></div>
+<span style="font-size: 84%;">(Drag or click the sliders to left or right.)</span>
+</p>
+
+
+
+<p class='block-text2'>Q5: How angry does <span class='currentName1'>{{}}</span> sound at the end of the cartoon?
+<!-- that <span class='currentSent2'>{{}}</span>? -->
+
+  <input type="hidden" class="slidervals" name="sliderval5" id="sliderval5" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+
+<p class='center-text'>
+<span class='leftLabel'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not at all angry
+</span> 
+<span class='rightLabel'> Extremely angry &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<br>
+<span style='float: left;'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (0) </span>  
+<span style='float: right;'> (100) &nbsp; &nbsp; &nbsp; &nbsp; </span>
+<div class="sliders" id="slider5"></div>
+<span style="font-size: 84%;">(Drag or click the sliders to left or right.)</span>
+</p>
 
 
 <!-- Optional responses -->
 <p id='optional1' class='block-text'>(Optional) Any additional comments?</p>
 
 <input type='text' id="commentBox1" class="commentBox" style="width: 400px;" value="" />
+
+</form>
+
 
 
 <!-- Warning message in case any of Q1-Q2 doesn't get a response -->
@@ -170,7 +251,7 @@ If you have any questions, please contact the principal investigator at sunwooj@
 <button type='button' id='continue'>Continue</button>
 
 
-<p><span style="font-weight: bold; color: #8C1515;"> Situation <span class="item_number">{{}}</span> out of 6</span></p>
+<p><span style="font-weight: bold; color: #8C1515;"> Situation <span class="item_number">{{}}</span> out of 4</span></p>
 
         </div>
     </div>
@@ -190,18 +271,18 @@ You are done with the main experiment. As a final step, we ask that you fill out
 </p> <br>
 
 
-<!-- <form id='eval'>
+<form id='eval'>
 <p class='questionSent'> 1. Did you enjoy the HIT?
 <br>
 <input type='radio' class='ev' name='ev' id='evalpos' value='yes' /> Yes <br>
 <input type='radio' class='ev' name='ev' id='evalneg' value='maybe' /> Not really <br>
 <input type='radio' class='ev' name='ev' id='evalneg2' value='no' /> No 
 </p>
-</form> -->
+</form>
 
 
 <form id='englishNative'>
-<p class='questionSent'> 1. Are you a native speaker of American English? 
+<p class='questionSent'> 2. Are you a native speaker of American English? 
 <br>
 <input type='radio' class='nat' name='natC' id='AmE' value='Y' /> Yes <br>
 <input type='radio' class='nat' name='natC' id='nonAmE' value='N' /> No 
@@ -214,7 +295,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='ageForm'>
-<p class='questionSent'> 2. What is your age?
+<p class='questionSent'> 3. What is your age?
 <br>
 <input type='radio' class='age' name='ageC' id='20s' value='20s' /> 18-29 <br>
 <input type='radio' class='age' name='ageC' id='30s' value='30s' /> 30-39 <br>
@@ -226,7 +307,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='genderForm'>
-<p class='questionSent'> 3. How would you describe your gender? 
+<p class='questionSent'> 4. How would you describe your gender? 
 <br>
 <input type='radio' class='gen' name='genC' id='mgen' value='M' /> Male <br>
 <input type='radio' class='gen' name='genC' id='fgen' value='F' /> Female <br>
@@ -237,7 +318,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='ethnicityForm'>
-<p class='questionSent'> 4. How would you describe your racial/ethnic identity?
+<p class='questionSent'> 5. How would you describe your racial/ethnic identity?
 <br>
 <input type='radio' class='eth' name='ethC' id='afa' value='AFR' /> African American <br>
 <input type='radio' class='eth' name='ethC' id='asa' value='ASI' /> Asian American <br>
@@ -250,7 +331,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='regionForm'>
-<p class='questionSent'>5. Where would you say you grew up? (In other words: what is your hometown?) 
+<p class='questionSent'>6. Where would you say you grew up? (In other words: what is your hometown?) 
 <br>
 <input type='radio' class='reg' name='regC' id='nonus' value='nonUS' /> Outside the US <br>
 <input type='radio' class='reg' name='regC' id='o48s' value='non48' /> Outside the contiguous 48 states <br>
@@ -268,7 +349,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='commentsForm'>
-<p class='questionSent'>6. (Optional) Any other comments about the questions above or the general experiment?
+<p class='questionSent'>7. Any other comments about the questions above or the general experiment?
 <br>
 <input type='text' id='lang_com' value="" />
 </p>
@@ -278,7 +359,6 @@ Please list any other languages that you speak fluently.
 </form>
 
 <br>
-
 
 <p><span style='color: blue' id="demoWarning"></span></p>
 

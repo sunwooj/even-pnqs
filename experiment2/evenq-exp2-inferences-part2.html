@@ -6,7 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <!-- FOR MTURK -->
-<script type="text/javascript" src="https://stanford.edu/~sunwooj/experiments/mmturkey.0.5.js"></script> 
+<script type="text/javascript" src="https://sunwooj.github.io/experiments-shared/mmturkey.0.5.js"></script> 
 
 <!-- FOR PHP DATA GATHERING -->
 <!-- <script type="text/javascript" src="https://stanford.edu/~sunwooj/experiments/mmturkey-extension.js"></script>  -->
@@ -14,9 +14,9 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
-<script src="evenq-exp2.js"></script>
+<script src="evenq-exp2-part2.js"></script>
 
-<link rel="stylesheet" href="https://stanford.edu/~sunwooj/experiments/sliders/jquery-ui.css"></link>
+<link rel="stylesheet" href="https://sunwooj.github.io/experiments-shared/sliders/jquery-ui.css"></link>
 
 <link href ="../experiments-shared/evenq.css" rel="stylesheet" type="text/css"/>
 
@@ -271,18 +271,18 @@ You are done with the main experiment. As a final step, we ask that you fill out
 </p> <br>
 
 
-<form id='eval'>
+<!-- <form id='eval'>
 <p class='questionSent'> 1. Did you enjoy the HIT?
 <br>
 <input type='radio' class='ev' name='ev' id='evalpos' value='yes' /> Yes <br>
 <input type='radio' class='ev' name='ev' id='evalneg' value='maybe' /> Not really <br>
 <input type='radio' class='ev' name='ev' id='evalneg2' value='no' /> No 
 </p>
-</form>
+</form> -->
 
 
 <form id='englishNative'>
-<p class='questionSent'> 2. Are you a native speaker of American English? 
+<p class='questionSent'> 1. Are you a native speaker of American English? 
 <br>
 <input type='radio' class='nat' name='natC' id='AmE' value='Y' /> Yes <br>
 <input type='radio' class='nat' name='natC' id='nonAmE' value='N' /> No 
@@ -295,7 +295,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='ageForm'>
-<p class='questionSent'> 3. What is your age?
+<p class='questionSent'> 2. What is your age?
 <br>
 <input type='radio' class='age' name='ageC' id='20s' value='20s' /> 18-29 <br>
 <input type='radio' class='age' name='ageC' id='30s' value='30s' /> 30-39 <br>
@@ -307,7 +307,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='genderForm'>
-<p class='questionSent'> 4. How would you describe your gender? 
+<p class='questionSent'> 3. How would you describe your gender? 
 <br>
 <input type='radio' class='gen' name='genC' id='mgen' value='M' /> Male <br>
 <input type='radio' class='gen' name='genC' id='fgen' value='F' /> Female <br>
@@ -318,7 +318,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='ethnicityForm'>
-<p class='questionSent'> 5. How would you describe your racial/ethnic identity?
+<p class='questionSent'> 4. How would you describe your racial/ethnic identity?
 <br>
 <input type='radio' class='eth' name='ethC' id='afa' value='AFR' /> African American <br>
 <input type='radio' class='eth' name='ethC' id='asa' value='ASI' /> Asian American <br>
@@ -331,7 +331,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='regionForm'>
-<p class='questionSent'>6. Where would you say you grew up? (In other words: what is your hometown?) 
+<p class='questionSent'>5. Where would you say you grew up? (In other words: what is your hometown?) 
 <br>
 <input type='radio' class='reg' name='regC' id='nonus' value='nonUS' /> Outside the US <br>
 <input type='radio' class='reg' name='regC' id='o48s' value='non48' /> Outside the contiguous 48 states <br>
@@ -349,7 +349,7 @@ Please list any other languages that you speak fluently.
 
 
 <form id='commentsForm'>
-<p class='questionSent'>7. Any other comments about the questions above or the general experiment?
+<p class='questionSent'>(Optional) 6. Any other comments about the questions above or the general experiment?
 <br>
 <input type='text' id='lang_com' value="" />
 </p>
