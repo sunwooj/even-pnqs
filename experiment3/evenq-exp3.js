@@ -25,24 +25,23 @@ var stimuliList = shuffle([
 [["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq2-c1", "snpi-anything-pnq2-c1", "snpi-anything-evenq-c1"], ["snpi-anything-c2-neg", "snpi-anything-c2-neut", "snpi-anything-c2-neut2"]],
 ["Roy", ["snpi-ever-evenpnq-c1", "snpi-ever-pq2-c1", "snpi-ever-pnq2-c1", "snpi-ever-evenq-c1"], ["snpi-ever-c2-neg", "snpi-ever-c2-neut", "snpi-ever-c2-neut2"]],
 ["Lily", ["snpi-anything-evenpnq-c1", "snpi-anything-pq-c1", "snpi-anything-pnq-c1", "snpi-anything-evenq-c1"], ["snpi-anything-c2-neg", "snpi-anything-c2-neut", "snpi-anything-c2-neut2"]],
-["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], ["snpi-anytime-c2-neg", "snpi-anytime-c2-neut", "snpi-anytime-c2-neut2"]]]
+["Roy", ["snpi-anytime-evenpnq-c1", "snpi-anytime-pq-c1", "snpi-anytime-pnq-c1", "snpi-anytime-evenq-c1"], ["snpi-anytime-c2-neg", "snpi-anytime-c2-neut", "snpi-anytime-c2-neut2"]]],
 
-// [["Lydia", ["filler-someclimb-yespre-c1", "filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]],
-// ["Lydia", ["filler-someclimb-yespre-c1", "filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]],
-// ["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"]],
-// ["David", ["filler-too-filler2-c1", "filler-too-filler2-c1", "filler-either-filler3-c1", "filler-either-filler3-c1"], ["tooeither-pos", "tooeither-neg"]]],
+[["Lydia", ["filler-someclimb-yesever2-c2", "filler-someclimb-noever2-c2", "filler-someclimb-yesever2-c2", "filler-someclimb-noever2-c2"], ["filler-someclimb-yespre2-c1", "filler-someclimb-nopre2-c1", "filler-someclimb-yespre2-c1"]],
+["Lydia", ["filler-someclimb-noever2-c2", "filler-someclimb-yesever2-c2", "filler-someclimb-noever2-c2", "filler-someclimb-yesever2-c2"], ["filler-someclimb-nopre2-c1", "filler-someclimb-yespre2-c1", "filler-someclimb-nopre2-c1"]],
+["Lydia", ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2", "filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"], ["filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1", "filler-someclimb-yespre-c1"]],
+["Lydia", ["filler-someclimb-noever-c2", "filler-someclimb-yesever-c2", "filler-someclimb-noever-c2", "filler-someclimb-yesever-c2"], ["filler-someclimb-nopre-c1", "filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1"]]],
 
-// [["Beth", ["filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1"], ["false3-neg", "false3-neg"]],
-// ["Beth", ["filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1", "filler-false-base3b-c1"], ["false3b-neg", "false3b-neg"]],
-// ["Richard", ["filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1"], ["false4b-pos", "false4b-pos"]],
-// ["Richard", ["filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1", "filler-false-base4b-c1"], ["false4b-pos", "false4b-pos"]]]
+[["Dean", ["filler-base2c-res-true", "filler-base2c-res-false", "filler-base2c-res-true", "filler-base2c-res-false"], ["filler-base2c-true-c1", "filler-base2c-true-c1", "filler-base2c-true-c1"]],
+["Dean", ["filler-base2c-res-true", "filler-base2c-res-false", "filler-base2c-res-true", "filler-base2c-res-false"], ["filler-base2c-true-c1", "filler-base2c-true-c1", "filler-base2c-true-c1"]],
+["Dean", ["filler-base2c-res-true", "filler-base2c-res-false", "filler-base2c-res-true", "filler-base2c-res-false"], ["filler-base2c-true-c1", "filler-base2c-true-c1", "filler-base2c-true-c1"]],
+["Dean", ["filler-base2c-res-true", "filler-base2c-res-false", "filler-base2c-res-true", "filler-base2c-res-false"], ["filler-base2c-true-c1", "filler-base2c-true-c1", "filler-base2c-true-c1"]]]
+
 
 ]);
 
 // Fillers that set baselines in the first two trials
-var basefillerList = shuffle([
-["Prue", ["filler-base1b-true-c1", "filler-base1b-true-c1"], ["filler-base1b-res-false", "filler-base1b-res-false"]], ["Dean", ["filler-someclimb-yespre-c1", "filler-someclimb-nopre-c1"], ["filler-someclimb-yesever-c2", "filler-someclimb-noever-c2"]]
-]);
+var baseStimVector = ["Prue", "filler-base1c-true-c1", ["filler-base1c-res-true", "filler-base1c-res-false"]];
 
 
 
@@ -77,7 +76,7 @@ var qtypeRandom = Math.floor(Math.random() * 4);
 
 
 function stepExperiment () {
-    if (trialnum == 6) { // end the experiment. 
+    if (trialnum == 7) { // end the experiment. 
         document.body.scrollTop = document.documentElement.scrollTop = 0;
         showSlide("language");
         $('#lgsubmit').click(function() {
@@ -127,18 +126,16 @@ function stepExperiment () {
 
         trialnum += 1;
 
-        if (trialnum < 3) {
-            baseStimVector = basefillerList[trialnum-1];
+        if (trialnum < 2) {
             nameStim = baseStimVector[0];
-            contVector = baseStimVector[1];
-            contStim = contVector[fillerRandom];
+            contStim = baseStimVector[1];
             stimuliVector = shuffle(baseStimVector[2]);
             qtypeStim = stimuliVector[fillerRandom];
             
         }
 
         else {
-            stimuliSet = shuffle(stimuliList[trialnum-3]);
+            stimuliSet = shuffle(stimuliList[trialnum-2]);
             stimuliVector = stimuliSet[stimRandom];
             nameStim = stimuliVector[0];
 
