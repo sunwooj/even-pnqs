@@ -1,0 +1,971 @@
+---
+title: "Snpi-pnq-test"
+author: "Sunwoo Jeong"
+date: "12/12/2018"
+output: html_document
+---
+
+```{r, echo=FALSE}
+## Call in the necessary packages and functions 
+
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(wesanderson)
+
+#### Summarize the data.
+## Summarizes data.
+## Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 95%).
+##   data: a data frame.
+##   measurevar: the name of a column that contains the variable to be summariezed
+##   groupvars: a vector containing names of columns that contain grouping variables
+##   na.rm: a boolean that indicates whether to ignore NA's
+##   conf.interval: the percent range of the confidence interval (default is 95%)
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
+                      conf.interval=.95, .drop=TRUE) {
+  library(plyr)
+  
+  # New version of length which can handle NA's: if na.rm==T, don't count them
+  length2 <- function (x, na.rm=FALSE) {
+    if (na.rm) sum(!is.na(x))
+    else       length(x)
+  }
+  
+  # This does the summary. For each group's data frame, return a vector with
+  # N, mean, and sd
+  datac <- ddply(data, groupvars, .drop=.drop,
+                 .fun = function(xx, col) {
+                   c(N    = length2(xx[[col]], na.rm=na.rm),
+                     mean = mean   (xx[[col]], na.rm=na.rm),
+                     sd   = sd     (xx[[col]], na.rm=na.rm)
+                   )
+                 },
+                 measurevar
+  )
+  
+  # Rename the "mean" column    
+  datac <- rename(datac, c("mean" = measurevar))
+  
+  datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+  
+  # Confidence interval multiplier for standard error
+  # Calculate t-statistic for confidence interval: 
+  # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+  ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+  datac$ci <- datac$se * ciMult
+  
+  return(datac)
+}
+```
+
+
+## Experiment 1
+
+```{r, echo=FALSE, eval=FALSE}
+## Data preprocessing; only the resulting data included in the repo
+# Create combined data set for experiment 1
+dat1a <- read.csv('exp1-live.results-parsed.csv')
+dat1b <- read.csv('exp1-part2-live.results-parsed.csv')
+
+dat1a$experiment <- "exp1a"
+dat1b$experiment <- "exp1b"
+
+dat1 <- rbind(dat1a, dat1b)
+
+
+# Anonymize worker IDs
+anonymous <- paste("S_", 1:length(unique(dat1$workerid)), sep="")
+dat1$workerid <- as.factor(dat1$workerid)
+levels(dat1$workerid) <- anonymous
+
+write.csv(dat1, file = "evenpnq-exp1-anonymized.csv", row.names=FALSE)
+```
+
+```{r}
+dat1 <- read.csv('evenpnq-exp1-anonymized.csv')
+
+## exclude non-native speakers
+dat1 <- subset(dat1, nat != 'N')
+
+## unify pnq/pq subtypes
+dat1$qtype2 <- dat1$qtype
+dat1$qtype2[dat1$qtype2 == "pnq2"] <- "pnq"
+dat1$qtype2[dat1$qtype2 == "pq2"] <- "pq"
+
+## separate out SNPI cases
+dat1_s <- subset(dat1, trialtype == "snpi")
+dat1_m <- subset(dat1, trialtype == "mnpi")
+dat1_l <- subset(dat1, trialtype == "evenl")
+#dat1 <- subset(dat1, trialtype != "snpi")
+
+## separate out 'anything'
+dat1_a <- subset(dat1_s, content == "anything")
+dat1_a$qtype2 <- factor(dat1_a$qtype2, levels= c("pq", "pnq", "evenq", "evenpnq"))
+
+## exclude even-h and a false control that turned out to be not categorically false (due to the availability of non-idiomatic interpretation of: John lifted a finger to help.)
+dat1 <- subset(dat1, trialtype != "evenh")
+dat1 <- subset(dat1, content != "base2b")
+
+## subdivide into fillers and target trials
+dat1_f <- subset(dat1, trialtype == 'filler')
+dat1_t <- subset(dat1, trialtype != 'filler')
+
+## reorder factors
+dat1_t$qtype2 <- factor(dat1_t$qtype2, levels= c("pq", "pnq", "evenq", "evenpnq"))
+dat1_s$qtype2 <- factor(dat1_s$qtype2, levels= c("pq", "pnq", "evenq", "evenpnq"))
+
+dat1_t$resvalence <- factor(dat1_t$resvalence, levels= c("pos", "neg"))
+
+## pick out just the control items; label T/F when necessary
+dat1_c <- subset(dat1, content == "FALSE" | content == "TRUE" | content == "base1b" | content == "base3b" | content == "base4b")
+dat1_c$content[dat1_c$content == "base1b"] <- "TRUE"
+dat1_c$content[dat1_c$content == "base3b"] <- "FALSE"
+dat1_c$content[dat1_c$content == "base4b"] <- "FALSE"
+
+# trial type column
+dat1_t$trialtype2 <- dat1_t$trialtype
+dat1_c$trialtype2 <- dat1_c$content
+
+dat1_tc <- rbind(dat1_t, dat1_c)
+summary(dat1_tc)
+
+## establish baseline values from control items
+sum_b <- summarySE(dat1_c, measurevar="sent1", groupvars = c("content"))
+sum_b
+
+false_base <- 36.11026
+true_base <- 86.74098
+
+## other relevant subsets
+dat1_m <- subset(dat1, trialtype == "mnpi")
+dat1_m$qtype2 <- factor(dat1_m$qtype2, levels= c("pq", "pnq", "evenq", "evenpnq"))
+
+dat1_on <- subset(dat1a, content == "anytime")
+
+summary(dat1_s)
+
+summary(dat1)
+
+sum1 <- summarySE(dat1_t, measurevar="sent1", groupvars = c("qtype2", "trialtype"))
+
+p1 = ggplot(sum1, aes(x=qtype2, y=sent1, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ trialtype)
+p1 <- p1 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of target PQs") + 
+  geom_hline(yintercept=true_base, linetype="dashed", 
+                color = "#0072B2", size=1.4) + 
+  geom_hline(yintercept=false_base, linetype="dashed", 
+                color = "#D55E00", size=1.4)
+p1
+
+sum2 <- summarySE(dat1_s, measurevar="sent1", groupvars = c("qtype2", "experiment"))
+
+p2 = ggplot(sum2, aes(x=qtype2, y=sent1, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ experiment)
+p2 <- p2 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of target PQs") + 
+  geom_hline(yintercept=true_base, linetype="dashed", 
+                color = "#0072B2", size=1.4) + 
+  geom_hline(yintercept=false_base, linetype="dashed", 
+                color = "#D55E00", size=1.4)
+p2
+
+
+sum3 <- summarySE(dat1_a, measurevar="sent1", groupvars = c("qtype2", "experiment"))
+
+p3 = ggplot(sum3, aes(x=qtype2, y=sent1, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ experiment)
+p3 <- p3 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of target PQs") + 
+  geom_hline(yintercept=true_base, linetype="dashed", 
+                color = "#0072B2", size=1.4) + 
+  geom_hline(yintercept=false_base, linetype="dashed", 
+                color = "#D55E00", size=1.4)
+p3
+
+
+sum_m <- summarySE(dat1_m, measurevar="sent1", groupvars = c("qtype2", "content"))
+
+pm = ggplot(sum_m, aes(x=qtype2, y=sent1, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ content)
+pm <- pm + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of target PQs") + 
+  geom_hline(yintercept=true_base, linetype="dashed", 
+                color = "#0072B2", size=1.4) + 
+  geom_hline(yintercept=false_base, linetype="dashed", 
+                color = "#D55E00", size=1.4)
+pm
+
+sum <- summarySE(dat1_t, measurevar="sent1", groupvars = c("qtype2", "content"))
+
+
+## Mixed effects models
+
+dat1_s$qtype2 <- relevel(dat1_s$qtype2, 'evenpnq')
+
+m1_s <- lmer(sent1 ~ qtype2 + (1|content) + (1|workerid), data = dat1_s)
+summary(m1_s)
+
+dat1s_1 <- subset(dat1_s, experiment == 'exp1a')
+dat1s_2 <- subset(dat1_s, experiment == 'exp1b')
+
+m1_s1 <- lmer(sent1 ~ qtype2 + (1|content), data = dat1s_1)
+summary(m1_s1)
+
+m1_s2 <- lmer(sent1 ~ qtype2 + (1|content), data = dat1s_2)
+summary(m1_s2)
+
+
+m1_m <- lmer(sent1 ~ qtype2 + (1|content) + (1|workerid), data = dat1_m)
+summary(m1_m)
+
+m1_l <- lmer(sent1 ~ qtype2 + (1|content) + (1|workerid), data = dat1_l)
+summary(m1_l)
+
+summary(dat1_t)
+
+dat1_tc <- dat1_tc %>%
+  mutate(qtype2 =
+           ifelse(qtype2 == "pq", "pq",
+              ifelse(qtype2 == "pnq", "pnq",
+                  ifelse(qtype2 == "evenq", "evenq",
+                     ifelse(qtype2 == "evenpnq", "evenpnq", "NA")))))
+dat1_tc$qtype2 <- as.factor(dat1_tc$qtype2)
+summary(dat1_tc$qtype2)
+
+dat1_tc$trialtype.numeric <- sapply(dat1_tc$trialtype2,function(i) contr.sum(5)[i,])
+
+
+dat1t_pos <- subset(dat1_t, resvalence == 'pos')
+dat1t_neg <- subset(dat1_t, resvalence == 'neg')
+
+dat1t_pos$qtype2 <- relevel(dat1t_pos$qtype2, 'evenpnq')
+dat1t_neg$qtype2 <- relevel(dat1t_neg$qtype2, 'evenpnq')
+
+m1_pos <- lmer(sent2 ~ qtype2 + (1|content) + (1|workerid), data = dat1t_pos)
+
+summary(m1_pos)
+
+
+m1_neg <- lmer(sent2 ~ qtype2 + (1|content) + (1|workerid), data = dat1t_neg)
+
+summary(m1_neg)
+```
+
+
+
+
+```{r}
+sum4 <- summarySE(dat1_t, measurevar="sent2", groupvars = c("qtype2", "resvalence"))
+
+p4 = ggplot(sum4, aes(x=qtype2, y=sent2, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent2-se, ymax=sent2+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ resvalence) 
+p4 <- p4 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of follow-ups") 
+p4
+
+sum4_2 <- summarySE(dat1_s, measurevar="sent2", groupvars = c("qtype2", "resvalence", "experiment"))
+
+p4_2 = ggplot(sum4_2, aes(x=qtype2, y=sent2, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent2-se, ymax=sent2+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(resvalence ~ experiment)
+p4_2 <- p4_2 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of follow-ups") 
+p4_2
+
+```
+
+```{r}
+
+anynot <- subset(filler, qtype == 'filler1' | qtype == 'filler4')
+
+sum_f <- summarySE(filler, measurevar="sent1", groupvars = c("qtype", "content"))
+
+p = ggplot(sum_f, aes(x=qtype, y=sent1)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100))  +
+  facet_grid(. ~ content)
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank())
+p
+
+
+sum_f <- summarySE(filler, measurevar="sent1", groupvars = c("qtype"))
+
+p = ggplot(sum_f, aes(x=qtype, y=sent1)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100))  
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank())
+p
+
+
+sum2 <- summarySE(dat1, measurevar="sent2", groupvars = c("qtype2", "resvalence"))
+
+p = ggplot(sum2, aes(x=qtype2, y=sent2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent2-se, ymax=sent2+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ resvalence)
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank())
+p
+
+
+# fillers
+
+everbeen <- subset(filler, content == 'everbeen' | content == 'been')
+everclimb <- subset(filler, content == 'everclimb')
+
+sum_ever <- summarySE(everbeen, measurevar="sent1", groupvars = c("qtype", "content"))
+sum_ever2 <- summarySE(everclimb, measurevar="sent1", groupvars = c("qtype"))
+
+
+p = ggplot(sum_ever, aes(x=qtype, y=sent1, fill=content)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.9)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#D55E00"))
+p
+
+p = ggplot(sum_ever2, aes(x=qtype, y=sent1)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent1-se, ymax=sent1+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.9)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) 
+#+ scale_fill_manual(values=c("#009E73", "#D55E00"))
+p
+
+
+sum_fl <- summarySE(anynot, measurevar="sent2", groupvars = c("qtype", "resvalence"))
+
+p = ggplot(sum_fl, aes(x=qtype, y=sent2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=sent2-se, ymax=sent2+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ resvalence)
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of target PQs")
+p
+
+theme(axis.text = element_text(size=14), axis.title.y = element_text(size=14)) +
+  theme(axis.title.x = element_blank(), axis.text.x = element_blank()) 
+```
+
+
+
+## Experiment 2
+
+```{r, echo=FALSE, eval=FALSE}
+## Create combined data set for experiment 2
+dat2a <- read.csv('exp2-live.results-parsed.csv') 
+dat2b <- read.csv('exp2-part2-live.results-parsed.csv')
+
+dat2a$experiment <- "exp2a"
+dat2b$experiment <- "exp2b"
+
+library(dplyr)
+
+groupdat =
+  dat2 %>%
+  filter(trialtype=="evenl") %>%
+  group_by(workerid) %>%
+  summarise(qtypebin = qtype[1]) %>%
+  full_join(dat2)
+
+
+dat2 <- rbind(dat2a, dat2b)
+
+dat2$qtype2 <- dat2$qtype
+dat2$qtype2[dat2$qtype2 == "pnq2"] <- "pnq"
+dat2$qtype2[dat2$qtype2 == "pq2"] <- "pq"
+
+
+anonymous2 <- paste("S_", 1:length(unique(dat2$workerid)), sep="")
+dat2$workerid <- as.factor(dat2$workerid)
+levels(dat2$workerid) <- anonymous2
+
+write.csv(dat2, file = "evenpnq-exp2-anonymized.csv", row.names=FALSE)
+```
+
+```{r}
+dat2 <- read.csv('evenpnq-exp2-anonymized.csv')
+
+dat2 <- subset(dat2, nat != 'N')
+dat2 <- subset(dat2, trialtype != 'evenh')
+
+## reorder factors
+dat2$qtype2 <- factor(dat2$qtype2, levels= c("pq", "pnq", "evenq", "evenpnq"))
+
+## separate out SNPI and MNPI cases
+dat2_s <- subset(dat2, trialtype == "snpi")
+dat2_m <- subset(dat2, trialtype == 'mnpi')
+
+
+## Ratings on the degree to which non-rhetorical, true info-seeking readings are available
+
+sum5 <- summarySE(dat2, measurevar="rhetorical", groupvars = c("qtype2"))
+
+p5 = ggplot(sum5, aes(x=qtype2, y=rhetorical, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=rhetorical-se, ymax=rhetorical+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p5 <- p5 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood of might p") 
+p5
+
+p <- ggplot(dat2, aes(x=qtype2, y=rhetorical, fill=qtype2)) + 
+  geom_violin(position=position_dodge(.9), colour="black") +
+  scale_y_continuous(limits = c(0, 100))
+p
+
+
+sum5_2 <- summarySE(dat2, measurevar="rhetorical", groupvars = c("qtype2", "trialtype"))
+
+p5_2 = ggplot(sum5_2, aes(x=qtype2, y=rhetorical, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=rhetorical-se, ymax=rhetorical+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ trialtype)
+p5_2 <- p5_2 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood of might p") 
+p5_2
+
+
+# Ratings on perceived negative evidential bias (add has indicated that not p in the preceding context)
+
+sum6 <- summarySE(dat2, measurevar="negevidential", groupvars = c("qtype2"))
+
+p6 = ggplot(sum6, aes(x=qtype2, y=negevidential, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=negevidential-se, ymax=negevidential+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p6 <- p6 + theme_bw() + 
+  theme(axis.text = element_text(size=14), axis.title.y = element_text(size=14)) +
+  theme(axis.title.x = element_blank()) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  labs(y = "Likelihood: Add indicated not p") 
+p6
+
+
+sum6_2 <- summarySE(dat2, measurevar="negevidential", groupvars = c("qtype2", "trialtype"))
+
+p6_2 = ggplot(sum6_2, aes(x=qtype2, y=negevidential, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=negevidential-se, ymax=negevidential+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ trialtype)
+p6_2 <- p6_2 + theme_bw() + 
+  theme(axis.text = element_text(size=14), axis.title.y = element_text(size=14)) +
+  theme(axis.title.x = element_blank()) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  labs(y = "Likelihood: Add indicated not p") 
+p6_2
+
+sum6_3 <- summarySE(dat2_s, measurevar="negevidential", groupvars = c("qtype2", "experiment"))
+
+p6_3 = ggplot(sum6_3, aes(x=qtype2, y=negevidential, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=negevidential-se, ymax=negevidential+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ experiment)
+p6_3 <- p6_3 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood: Add indicated not p") 
+p6_3
+
+
+# Ratings on perceived speaker epistemic bias (speaker believed that p in the preceding context)
+
+sum7 <- summarySE(dat2, measurevar="posepist", groupvars = c("qtype2"))
+
+p7 = ggplot(sum7, aes(x=qtype2, y=posepist, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=posepist-se, ymax=posepist+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p7 <- p7 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  labs(y = "Likelihood: Sp believed that p") 
+p7
+
+sum7_2 <- summarySE(dat2, measurevar="posepist", groupvars = c("qtype2", "trialtype"))
+
+p7_2 = ggplot(sum7_2, aes(x=qtype2, y=posepist, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=posepist-se, ymax=posepist+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ trialtype)
+p7_2 <- p7_2 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank(), axis.text.x = element_blank()) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  labs(y = "Likelihood: Sp believed that p") 
+p7_2
+
+# Ratings on perceived speaker mirativity (speaker is surprised)
+
+sum8 <- summarySE(dat2, measurevar="surprise", groupvars = c("qtype2"))
+
+p8 = ggplot(sum8, aes(x=qtype2, y=surprise, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=surprise-se, ymax=surprise+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p8 <- p8 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  labs(y = "Likelihood: Sp is surprised") 
+p8
+
+
+sum8_2 <- summarySE(dat2, measurevar="surprise", groupvars = c("qtype2", "trialtype"))
+
+p8_2 = ggplot(sum8_2, aes(x=qtype2, y=surprise, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=surprise-se, ymax=surprise+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ trialtype)
+p8_2 <- p8_2 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  labs(y = "Likelihood: Sp is surprised") 
+p8_2
+
+sum8_3 <- summarySE(dat2, measurevar="surprise", groupvars = c("qtype2", "experiment"))
+
+p8_3 = ggplot(sum8_3, aes(x=qtype2, y=surprise, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=surprise-se, ymax=surprise+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ experiment)
+p8_3 <- p8_3 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood: Sp is surprised") 
+p8_3
+
+
+# Ratings on perceived speaker indignation (speaker is angry)
+
+sum9 <- summarySE(dat2, measurevar="indignation", groupvars = c("qtype2"))
+
+p9 = ggplot(sum9, aes(x=qtype2, y=indignation, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=indignation-se, ymax=indignation+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p9 <- p9 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood: Sp is angry") 
+p9
+
+
+sum9_2 <- summarySE(dat2, measurevar="indignation", groupvars = c("qtype2", "trialtype"))
+
+p9_2 = ggplot(sum9_2, aes(x=qtype2, y=indignation, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=indignation-se, ymax=indignation+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ trialtype)
+p9_2 <- p9_2 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood: Sp is angry") 
+p9_2
+
+
+sum9_3 <- summarySE(dat2, measurevar="indignation", groupvars = c("content", "qtype2"))
+
+p9_3 = ggplot(sum9_3, aes(x=qtype2, y=indignation, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=indignation-se, ymax=indignation+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ content)
+p9_3 <- p9_3 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood: Sp is angry") 
+p9_3
+
+
+dat2_c <- subset(dat2, content == "give" | content == "ever")
+
+sum9_4 <- summarySE(dat2_c, measurevar="indignation", groupvars = c("content", "qtype2"))
+
+p9_4 = ggplot(sum9_4, aes(x=qtype2, y=indignation, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=indignation-se, ymax=indignation+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ content)
+p9_4 <- p9_4 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Likelihood: Sp is angry") 
+p9_4
+
+
+## Mixed effects models
+
+m2_1 <- lmer(rhetorical ~ qtype2 + (1|content) + (1|workerid), data = dat2)
+summary(m2_1)
+
+dat2$qtype2 <- relevel(dat2$qtype2, 'pnq')
+
+m2_2 <- lmer(negevidential ~ qtype2 + (1|content) + (1|workerid), data = dat2)
+summary(m2_2)
+
+dat2$qtype2 <- relevel(dat2$qtype2, 'evenq')
+
+m2_3 <- lmer(posepist ~ qtype2 + (1|content) + (1|workerid), data = dat2)
+summary(m2_3)
+
+m2_4 <- lmer(surprise ~ qtype2 + (1|content) + (1|workerid), data = dat2)
+summary(m2_4)
+
+m2_5 <- lmer(indignation ~ qtype2 + (1|content) + (1|workerid), data = dat2)
+summary(m2_5)
+
+dat2$qtype2 <- relevel(dat2$qtype2, 'pnq')
+
+```
+
+
+## Experiment 3
+
+```{r}
+## Creat combined data set for experiment 3
+dat3a <- read.csv('exp3-live.results-parsed.csv') 
+dat3b <- read.csv('exp3-live-190304.results-parsed.csv')
+
+dat3a$experiment <- "exp3a"
+dat3b$experiment <- "exp3b"
+
+dat3 <- rbind(dat3a, dat3b)
+write.csv(dat3, file = "snpipnq-exp3-combined.csv", row.names=FALSE)
+
+## Sub-experiments
+dat3a <- subset(dat3a, nat != 'N')
+dat3b <- subset(dat3b, nat != 'N')
+
+anonymous3 <- paste("S_", 1:length(unique(dat3$workerid)), sep="")
+dat3$workerid <- as.factor(dat3$workerid)
+levels(dat3$workerid) <- anonymous3
+
+write.csv(dat3, file = "evenpnq-exp3-anonymized.csv", row.names=FALSE)
+```
+
+
+```{r}
+dat3 <- read.csv('evenpnq-exp3-anonymized.csv')
+dat3 <- subset(dat3, nat != 'N')
+
+filler3 <- subset(dat3, trialtype == 'filler')
+
+dat3 <- subset(dat3, nat != 'N')
+dat3 <- subset(dat3, trialtype != 'filler')
+dat3 <- subset(dat3, trialtype != "evenh")
+
+dat3$qtype2 <- dat3$qtype
+dat3$qtype2[dat3$qtype2 == "pnq2"] <- "pnq"
+dat3$qtype2[dat3$qtype2 == "pq2"] <- "pq"
+
+dat3$qtype2 <- factor(dat3$qtype2, levels= c("pq", "pnq", "evenq", "evenpnq"))
+
+dat3_neut <- subset(dat3, context != "neg")
+dat3_neg <- subset(dat3, context == "neg")
+
+## separate out 'anything'
+dat3_a <- subset(dat3, content == "anything")
+
+
+sum10 <- summarySE(dat3, measurevar="naturalness", groupvars = c("qtype2", "context"))
+
+p10 = ggplot(sum10, aes(x=qtype2, y=naturalness, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=naturalness-se, ymax=naturalness+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ context)
+p10 <- p10 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of Q given context") 
+p10
+
+
+sum10_nt <- summarySE(dat3_neut, measurevar="naturalness", groupvars = c("qtype2", "context"))
+
+p10_nt = ggplot(sum10_nt, aes(x=qtype2, y=naturalness, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=naturalness-se, ymax=naturalness+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ context)
+p10_nt <- p10_nt + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of Q given context") 
+p10_nt
+
+
+
+sum10_ng <- summarySE(dat3_neg, measurevar="naturalness", groupvars = c("qtype2", "trialtype"))
+
+p10_ng = ggplot(sum10_ng, aes(x=qtype2, y=naturalness, fill=qtype2)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=naturalness-se, ymax=naturalness+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ trialtype)
+p10_ng <- p10_ng + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of Q given context") 
+p10_ng
+
+
+
+sum10_1 <- summarySE(dat3, measurevar="naturalness", groupvars = c("qtype", "context"))
+
+p10_1 = ggplot(sum10_1, aes(x=qtype, y=naturalness, fill=qtype)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=naturalness-se, ymax=naturalness+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(. ~ context)
+p10_1 <- p10_1 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  #scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of Q given context") 
+p10_1
+
+
+
+sum10_2 <- summarySE(dat3, measurevar="naturalness", groupvars = c("trialtype", "qtype2", "context"))
+
+p10_2 = ggplot(sum10_2, aes(x=qtype2, y=naturalness)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=naturalness-se, ymax=naturalness+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.05)) + 
+  scale_y_continuous(limits = c(0, 100)) +
+  facet_grid(trialtype ~ context)
+p10_2 <- p10_2 + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#56B4E9", "#F0E442", "#CC79A7")) +
+  theme(legend.position = "none") +
+  labs(y = "Naturalness of Q given context") 
+p10_2
+
+# Fillers
+
+pre <- subset(dat3, conttype2 == 'yespre' | conttype2 == 'nopre')
+pre2 <- subset(dat3, conttype2 == 'yespre2' | conttype2 == 'nopre2')
+
+sum_pre <- summarySE(pre, measurevar="naturalness", groupvars= c("conttype2", "qtype"))
+sum_pre2 <- summarySE(pre2, measurevar="naturalness", groupvars= c("conttype2", "qtype"))
+
+p = ggplot(sum_pre2, aes(x=conttype2, y=naturalness, fill=qtype)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=naturalness-se, ymax=naturalness+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.9)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#D55E00"))
+p
+
+p = ggplot(sum_pre, aes(x=conttype2, y=naturalness, fill=qtype)) + 
+  geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
+  geom_errorbar(aes(ymin=naturalness-se, ymax=naturalness+se),
+                width=.4,                    # Width of the error bars
+                position=position_dodge(.9)) + 
+  scale_y_continuous(limits = c(0, 100)) 
+p <- p + theme_bw() + 
+  theme(axis.text=element_text(size=14), axis.title.y=element_text(size=14)) +
+  theme(axis.title.x=element_blank()) +
+  scale_fill_manual(values=c("#009E73", "#D55E00"))
+p
+
+
+dat2$rhetorical2 <- dat2$rhetorical/100
+
+m1 <- glmer(rhetorical2 ~ qtype2 + (1|content) + (1|workerid), data = dat2, family = "binomial")
+
+summary(m1)
+
+## Mixed effects models
+
+dat3_c1 <- subset(dat3, context == "neut")
+dat3_c2 <- subset(dat3, context == "neut2")
+dat3_c3 <- subset(dat3, context == "neg")
+
+m <- lmer(naturalness ~ qtype2 * context + (1|content) + (1|workerid), data = dat3)
+summary(m)
+
+m3_1 <- lmer(naturalness ~ qtype2 + (1|content) + (1|workerid), data = dat3_c1)
+summary(m3_1)
+
+m3_2 <- lmer(naturalness ~ qtype2 + (1|content) + (1|workerid), data = dat3_c2)
+summary(m3_2)
+
+m3_3 <- lmer(naturalness ~ qtype2 + (1|content) + (1|workerid), data = dat3_c3)
+summary(m3_3)
+
+dat3_c2$qtype2 <- relevel(dat3_c2$qtype2, 'pnq')
+
+dat3_c3$qtype2 <- relevel(dat3_c3$qtype2, 'pq')
+
+```
+
